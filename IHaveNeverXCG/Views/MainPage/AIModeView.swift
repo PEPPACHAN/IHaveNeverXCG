@@ -10,6 +10,8 @@ import SwiftUI
 struct AIModeView: View {
     @Environment(\.requestReview) var requestReview
     
+    @FocusState private var isTextfieldActive: Bool
+    
     @State private var modeName: String = ""
     @State private var selectedMode = ""
     @StateObject private var mode = APIService.shared
@@ -32,24 +34,25 @@ struct AIModeView: View {
                     )
                     .font(.custom("inter", size: 18.43))
                     .fontWeight(.heavy)
-                    .padding()
+                    .padding(hasRoundedCorners() ? 16: 5)
                 
                 if !isLoading {
                     TextField("modeName".changeLocale(lang: language), text: $modeName)
                         .font(.custom("inter", size: 16))
                         .fontWeight(.medium)
+                        .focused($isTextfieldActive)
                         .padding()
                         .background(Color.init(.tertiarySystemFill))
                         .foregroundStyle(Color.black)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .padding(.horizontal)
-                        .submitLabel(.done)
                     
                     Button(action:{
                         if !mode.modes.isEmpty {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 self.isSelection.toggle()
                             }
+                            isTextfieldActive = false
                         }
                     }){
                         HStack{
@@ -91,6 +94,7 @@ struct AIModeView: View {
                         TextField("numberOfCards".changeLocale(lang: language), text: $numberOfCards)
                             .font(.custom("inter", size: 16))
                             .fontWeight(.medium)
+                            .focused($isTextfieldActive)
                             .keyboardType(.numberPad)
                             .foregroundStyle(.black)
                             .padding()
@@ -103,6 +107,7 @@ struct AIModeView: View {
                             if tags.isEmpty{
                                 Text("briefTagsForTheGist".changeLocale(lang: language))
                                     .font(.custom("inter", size: 16))
+                                    .focused($isTextfieldActive)
                                     .fontWeight(.medium)
                                     .foregroundStyle(.black.opacity(0.3))
                                     .padding(.top, 26)
@@ -150,6 +155,22 @@ struct AIModeView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white)
         .colorScheme(.light)
+        .onTapGesture {
+            isTextfieldActive = false
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isSelection = false
+            }
+        }
+        .onChange(of: isTextfieldActive) { newValue in
+            if newValue {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isSelection = false
+                }
+                isTextfieldActive = newValue
+            } else {
+                isTextfieldActive = newValue
+            }
+        }
     }
 }
 

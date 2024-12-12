@@ -8,12 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		FC62503E2D0B031B00C14A5A /* Inter-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC62503C2D0B031B00C14A5A /* Inter-VariableFont_opsz,wght.ttf */; };
-		FC6250462D0B033B00C14A5A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6250432D0B033B00C14A5A /* Preview Assets.xcassets */; };
 		FC6250472D0B033B00C14A5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC62503F2D0B033B00C14A5A /* Assets.xcassets */; };
-		FC6250482D0B033B00C14A5A /* SubscriptionsConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = FC6250452D0B033B00C14A5A /* SubscriptionsConfiguration.storekit */; };
 		FC6250492D0B033B00C14A5A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6250402D0B033B00C14A5A /* ContentView.swift */; };
 		FC62504A2D0B033B00C14A5A /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6250412D0B033B00C14A5A /* Controller.swift */; };
 		FC62504B2D0B033B00C14A5A /* IHaveNeverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6250422D0B033B00C14A5A /* IHaveNeverApp.swift */; };
+		FC62509D2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit in Resources */ = {isa = PBXBuildFile; fileRef = FC62509C2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */; };
 		FC7155E52D0B01EB00175458 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC7155E32D0B01EB00175458 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -24,8 +23,7 @@
 		FC6250402D0B033B00C14A5A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FC6250412D0B033B00C14A5A /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		FC6250422D0B033B00C14A5A /* IHaveNeverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IHaveNeverApp.swift; sourceTree = "<group>"; };
-		FC6250432D0B033B00C14A5A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		FC6250452D0B033B00C14A5A /* SubscriptionsConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = SubscriptionsConfiguration.storekit; sourceTree = "<group>"; };
+		FC62509C2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SubscriptionsConfiguration.storekit 18-24-41-311.storekit"; sourceTree = "<group>"; };
 		FC7155E32D0B01EB00175458 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,12 +45,11 @@
 		E8646D76BB9F1DA5BBFCDE30 = {
 			isa = PBXGroup;
 			children = (
+				FC62509C2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */,
 				FC62503F2D0B033B00C14A5A /* Assets.xcassets */,
 				FC6250402D0B033B00C14A5A /* ContentView.swift */,
 				FC6250412D0B033B00C14A5A /* Controller.swift */,
 				FC6250422D0B033B00C14A5A /* IHaveNeverApp.swift */,
-				FC6250442D0B033B00C14A5A /* Preview Content */,
-				FC6250452D0B033B00C14A5A /* SubscriptionsConfiguration.storekit */,
 				FC62503D2D0B031B00C14A5A /* Fonts */,
 				FC7155E42D0B01EB00175458 /* Preview Content */,
 				FC71552A2D0AFA6900175458 /* APIService */,
@@ -68,14 +65,6 @@
 				FC62503C2D0B031B00C14A5A /* Inter-VariableFont_opsz,wght.ttf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		FC6250442D0B033B00C14A5A /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				FC6250432D0B033B00C14A5A /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		FC7155E42D0B01EB00175458 /* Preview Content */ = {
@@ -146,9 +135,8 @@
 			files = (
 				FC7155E52D0B01EB00175458 /* Preview Assets.xcassets in Resources */,
 				FC62503E2D0B031B00C14A5A /* Inter-VariableFont_opsz,wght.ttf in Resources */,
-				FC6250462D0B033B00C14A5A /* Preview Assets.xcassets in Resources */,
+				FC62509D2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit in Resources */,
 				FC6250472D0B033B00C14A5A /* Assets.xcassets in Resources */,
-				FC6250482D0B033B00C14A5A /* SubscriptionsConfiguration.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

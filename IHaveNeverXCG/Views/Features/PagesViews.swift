@@ -207,7 +207,7 @@ struct FourthPageView: View {
                     }
                     .padding(.leading, 25)
                     Spacer()
-                    Image(systemName: products.choice == 0 ? "checkmark.circle.fill": "circle")
+                    Image(systemName: products.choice == 1 ? "checkmark.circle.fill": "circle")
                         .font(.custom("inter", size: 22))
                         .foregroundStyle(Color.white)
                         .padding(.trailing, 25)
@@ -217,11 +217,11 @@ struct FourthPageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 100))
                 .overlay {
                     RoundedRectangle(cornerRadius: 100)
-                        .stroke(Color.white, lineWidth: products.choice == 0 ? 1: 0)
+                        .stroke(Color.white, lineWidth: products.choice == 1 ? 1: 0)
                 }
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)){
-                        products.choice = 0
+                        products.choice = 1
                     }
                 }
                 HStack(spacing: 15){
@@ -239,7 +239,7 @@ struct FourthPageView: View {
                     }
                     .padding(.horizontal, 25)
                     Spacer()
-                    Image(systemName: products.choice == 1 ? "checkmark.circle.fill": "circle")
+                    Image(systemName: products.choice == 0 ? "checkmark.circle.fill": "circle")
                         .font(.custom("inter", size: 22))
                         .foregroundStyle(Color.white)
                         .padding(.horizontal, 25)
@@ -249,15 +249,16 @@ struct FourthPageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 100))
                 .overlay {
                     RoundedRectangle(cornerRadius: 100)
-                        .stroke(Color.white, lineWidth: products.choice == 1 ? 1: 0)
+                        .stroke(Color.white, lineWidth: products.choice == 0 ? 1: 0)
                 }
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)){
-                        products.choice = 1
+                        products.choice = 0
                     }
                 }
             }
-            .padding(products.isPurchasedShow ? 20: 0)
+            .padding(products.isPurchasedShow ? hasRoundedCorners() ? 20: 0: 0)
+            .padding(.bottom, hasRoundedCorners() ? 0: -20)
             .offset(y: hasRoundedCorners() ? 0: -10)
             
             if products.isPurchasedShow{
@@ -302,7 +303,7 @@ struct FourthPageView: View {
                     .foregroundStyle(Color.gray.opacity(0.4))
                     .font(.custom("inter", size: 14.09))
                     .fontWeight(.medium)
-                    .offset(y: 18)
+                    .offset(y: hasRoundedCorners() ? 18: 2)
                     .padding(.horizontal, 50)
                 }
                 .padding(.bottom)

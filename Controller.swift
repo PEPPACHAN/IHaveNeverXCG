@@ -42,7 +42,7 @@ final class PurchaseManager: ObservableObject {
     
     private let productIds = ["ru.yearly.akhmed", "ru.monthly.akhmed"]
     
-    @Published var choice: Int = 0
+    @Published var choice: Int = 1
     @Published var isPurchasedShow: Bool = false
     
     @Published private(set) var products: [Product] = []
