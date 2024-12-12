@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  IHaveNever
+
+  Created by PEPPA CHAN on 29.11.2024.
+  
+*/
+
+"gameModes" = "Spielmodi";
+"aiMode" = "AI Modus";
+"understood" = "Verstanden";
+"modeName" = "Name des Modus";
+"selectMode" = "Modus auswählen";
+"numberOfCards" = "Anzahl der karten";
+"briefTagsForTheGist" = "Kurze tags für das wesentliche";
+"generate" = "Erzeugen Sie";
+"restorePurchases" = "Käufe wiederherstellen";
+"privacyPolicy" = "Datenschutzbestimmungen";
+"contactUs" = "Kontakt";
+"language" = "Sprache";
+"premiumActivated" = "Premium aktiviert";
+"IHN" = "Ich habe nie";
+"play" = "Jetzt spielen";
+"exit" = "Sind Sie sicher, dass Sie ausgehen wollen? Ihr Fortschritt wird nicht gespeichert";
+"exitToMenu" = "Zum Menü zurückkehren";
+"repeat" = "Spiel wiederholen";
+
+"sexDirtyQuestions" = "Sex & Dirty\nFragen";
+"lotsOfDirty" = "Eine Menge schmutziger Fragen für\npaare oder gute Freunde...";
+"1MQuestions" = "1M+ Fragen in\neiner App";
+"haveFun" = "Viel Spaß und wartet auf die Aktualisierung der\nboards";
+"thankYou" = "Vielen Dank für\nbewertung!";
+"showYourLove" = "Zeig deine Liebe und bewerte\nuns im AppStore";
+"getFullAccess" = "Vollständigen Zugang erhalten";
+"AICards" = "AI-Karten";
+"create" = "erstellen";
+"3-DayFreeTrial" = "3-tägige kostenlose Testversion";
+"dirtySexCards" = "Dirty & Sex Karten";
+"newContent" = "Neue Aktualisierungen des Inhalts";
+"yearly" = "Jährlich";
+"$90.00year" = "(dann $90,00 /Jahr)";
+"monthly" = "Monatlich";
+"/month" = "9,90 $/Monat";
+"continue" = "Weiter";
+"noPremiumAccess" = "Kein Premium-Zugang";
+"freePacks" = "Kostenlose Pakete";
+"premiumPacks"= "Premium Pakete";

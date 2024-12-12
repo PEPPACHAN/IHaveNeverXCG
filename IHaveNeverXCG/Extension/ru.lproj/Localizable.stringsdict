@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>board</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format@</string>
+		<key>format</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string> колода, </string>
+			<key>two</key>
+			<string> колоды, </string>
+			<key>three</key>
+			<string> колоды, </string>
+			<key>four</key>
+			<string> колоды, </string>
+			<key>other</key>
+			<string> колод, </string>
+		</dict>
+	</dict>
+	<key>cards</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format@</string>
+		<key>format</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string> карт</string>
+			<key>one</key>
+			<string> карта</string>
+			<key>two</key>
+			<string> карты</string>
+			<key>three</key>
+			<string> карты</string>
+			<key>few</key>
+			<string> карт</string>
+			<key>many</key>
+			<string> карт</string>
+			<key>other</key>
+			<string> карт</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,30 @@
+name: IHaveNeverXCG
+
+options:
+  minimumXcodeGenVersion: 2.10
+  generateEmptyDirectories: true
+  deploymentTarget:
+    iOS: "16.6"
+
+settings:
+  IPHONEOS_DEPLOYMENT_TARGET: "16.6"
+  MARKETING_VERSION: "1.0"
+  CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  IHaveNever:
+    type: application
+    platform: iOS
+    deploymentTarget: 16.6
+    sources:
+      - path: IHaveNeverXCG/APIService
+      - path: IHaveNeverXCG/Extension
+      - path: IHaveNeverXCG/Views
+    resources:
+      - path: IHaveNeverXCG/Fonts
+      - path: IHaveNeverXCG/Preview Content
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: "job.IHaveNever"
+      INFOPLIST_FILE: IHaveNeverXCG/app/Info.plist
+    entitlements:
+      path: IHaveNeverXCG/app/Debug.entitlements

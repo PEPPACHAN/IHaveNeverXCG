@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>board</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format@</string>
+		<key>format</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string> brett, </string>
+			<key>one</key>
+			<string> brett, </string>
+			<key>other</key>
+			<string> bretter, </string>
+		</dict>
+	</dict>
+	<key>cards</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@format@</string>
+		<key>format</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string> karte</string>
+			<key>one</key>
+			<string> karte</string>
+			<key>other</key>
+			<string> karten</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

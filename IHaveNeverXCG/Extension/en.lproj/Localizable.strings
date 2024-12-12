@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  IHaveNever
+
+  Created by PEPPA CHAN on 29.11.2024.
+  
+*/
+
+"gameModes" = "Game Modes";
+"aiMode" = "AI Mode";
+"understood" = "Understood";
+"modeName" = "Mode name";
+"selectMode" = "Select mode";
+"numberOfCards" = "Number of cards";
+"briefTagsForTheGist" = "Brief tags for the gist";
+"generate" = "Generate";
+"restorePurchases" = "Restore Purchases";
+"privacyPolicy" = "Privacy Policy";
+"contactUs" = "Contact Us";
+"language" = "Language";
+"premiumActivated" = "Premium activated";
+"IHN" = "I have never";
+"play" = "Play now";
+"exit" = "Are you sure you want to go out? Your progress is not saved";
+"exitToMenu" = "Exit to menu";
+"repeat" = "Repeat game";
+
+"sexDirtyQuestions" = "Sex & Dirty\nQuestions";
+"lotsOfDirty" = "Lots of dirty questions for\ncouples or good friends...";
+"1MQuestions" = "1M+ Questions in\none app";
+"haveFun" = "Have fun, wait for the\nboards to update";
+"thankYou" = "Thank you for\nrating!";
+"showYourLove" = "Show your love and rate\nus in the AppStore";
+"getFullAccess" = "Get Full Access";
+"AICards" = "AI Cards";
+"create" = "Create";
+"3-DayFreeTrial" = "3-Day Free Trial";
+"dirtySexCards" = "Dirty & Sex cards";
+"newContent" = "New content updates";
+"yearly" = "Yearly";
+"$90.00year" = "(then $90.00 /year)";
+"monthly" = "Monthly";
+"/month" = "$9.90 /month";
+"continue" = "Continue";
+"noPremiumAccess" = "No Premium Access";
+"freePacks" = "Free Packs";
+"premiumPacks"= "Premium Packs";

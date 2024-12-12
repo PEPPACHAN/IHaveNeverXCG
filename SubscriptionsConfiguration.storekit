@@ -1,0 +1,166 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "373C4F42",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "928ACB55",
+      "localizations" : [
+
+      ],
+      "name" : "premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "9.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "2135F73E",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Monthly premium subscription",
+              "displayName" : "Monthly Subscription",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Monatliches Abonnement",
+              "displayName" : "Monatliches Abonnement",
+              "locale" : "de"
+            },
+            {
+              "description" : "Месячная подписка на премиум",
+              "displayName" : "Подписка на месяц",
+              "locale" : "ru"
+            }
+          ],
+          "productID" : "ru.monthly.akhmed",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Monthly",
+          "subscriptionGroupID" : "928ACB55",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "90.00",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "DDB88D8B",
+          "introductoryOffer" : {
+            "internalID" : "C00D159C",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Yearly premium subscription",
+              "displayName" : "Yearly Subscription",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Jahresabonnement",
+              "displayName" : "Jahresabonnement",
+              "locale" : "de"
+            },
+            {
+              "description" : "подписка на 1 год",
+              "displayName" : "Годовая подписка",
+              "locale" : "ru"
+            }
+          ],
+          "productID" : "ru.yearly.akhmed",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "yearly",
+          "subscriptionGroupID" : "928ACB55",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

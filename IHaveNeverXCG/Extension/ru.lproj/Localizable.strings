@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  IHaveNever
+
+  Created by PEPPA CHAN on 29.11.2024.
+  
+*/
+
+"gameModes" = "Игровые режимы";
+"aiMode" = "AI режим";
+"understood" = "Понятно";
+"modeName" = "Название";
+"selectMode" = "Выберите режим";
+"numberOfCards" = "Количество карт";
+"briefTagsForTheGist" = "Кратки теги для сути";
+"generate" = "Сгенерировать";
+"restorePurchases" = "Восстановить покупки";
+"privacyPolicy" = "Политика конфиденциальности";
+"contactUs" = "Свяжитесь с нами";
+"language" = "Язык";
+"premiumActivated" = "Премиум активирован";
+"IHN" = "Я никогда";
+"play" = "Играть сейчас";
+"exit" = "Вы уверены, что хотите выйти? Весь прогресс будет утерян";
+"exitToMenu" = "Выйти в главное меню";
+"repeat" = "Играть сначала";
+"sexDirtyQuestions" = "Sex & Dirty\nВопросы";
+"lotsOfDirty" = "Много грязных вопросов для\nпар и близких друзей...";
+"1MQuestions" = "1M+ Вопросов в\nодном приложении";
+"haveFun" = "Веселитесь, получайте\nобновления колоды";
+"thankYou" = "Спасибо\nза оценку!";
+"showYourLove" = "Покажите свою любовь\nи оцените нас в AppStore";
+"getFullAccess" = "Получить полный доступ";
+"AICards" = "AI карты";
+"create" = "";
+"3-DayFreeTrial" = "3-дня бесплатно";
+"dirtySexCards" = "Dirty & Sex карты";
+"newContent" = "Обновление контента";
+"yearly" = "Годовая";
+"$90.00year" = "(далее $90.00 /год)";
+"monthly" = "Месячная";
+"/month" = "$9.90 /месяц";
+"continue" = "Продолжить";
+"noPremiumAccess" = "Подписка не активна";
+"freePacks" = "Бесплатные режимы";
+"premiumPacks"= "Премиальные режимы";
