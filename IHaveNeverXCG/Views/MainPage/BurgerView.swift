@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct BurgerView: View {
     private let languagesArray = ["en", "de", "ru"]
@@ -35,6 +36,15 @@ struct BurgerView: View {
             
             Text("restorePurchases".changeLocale(lang: language))
                 .frame(maxWidth: 300, alignment: .leading)
+                .onTapGesture {
+                    Task {
+                        do{
+                            try await AppStore.sync()
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
             Text("privacyPolicy".changeLocale(lang: language))
                 .frame(maxWidth: 300, alignment: .leading)
             Text("contactUs".changeLocale(lang: language))
@@ -46,7 +56,7 @@ struct BurgerView: View {
                             language == "de" ? "GE" :
                                 language == "en" ? "ENG" :
                                 language == "ru" ? "RU": "ENG"
-                        )
+                        ) // show selected language code in top trailing side of button
                         .offset(x: 35, y: -5)
                         .font(.custom("inter", size: 12.96))
                         .fontWeight(.semibold)
@@ -79,6 +89,7 @@ struct BurgerView: View {
             Spacer()
             
             HStack {
+                // premium activated label
                 Image("crown")
                 Text(products.hasUnlockedPro ? "premiumActivated".changeLocale(lang: language) : "noPremiumAccess".changeLocale(lang: language)) // MARK: Translate to german
                     .foregroundStyle(
@@ -106,6 +117,7 @@ struct BurgerView: View {
 
 extension BurgerView {
     func moreLanguages() -> some View {
+        // show all languages after button pressed
         VStack(spacing: 27){
             ForEach(languagesArray, id: \.self) { item in
                 HStack{
@@ -151,6 +163,7 @@ extension BurgerView {
 
 extension BurgerView {
     private func loadDataWithRetry(lang: String) {
+        // loads data from backend with retry if first time it hasn't return data
         APIService.shared.fetchData = nil
         APIService.shared.modes.removeAll()
         if APIService.shared.modes.isEmpty {

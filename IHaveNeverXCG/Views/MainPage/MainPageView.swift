@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainPageView: View {
+    // main page. its just connect all views
     @AppStorage("wasShown") private var wasShown: Bool = false
     @State private var retryTimer: Timer? = nil
     

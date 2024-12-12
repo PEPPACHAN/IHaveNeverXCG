@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainPageGMView: View {
+    // showing plates for main page
     @StateObject private var apiData = APIService.shared
     @StateObject private var gameInfo = GameInfo.shared
     @StateObject private var products = PurchaseManager.shared
@@ -20,8 +21,10 @@ struct MainPageGMView: View {
         ScrollView{
             Group{
                 if products.hasUnlockedPro {
+                    // show all cards in one stack if premium activated
                     platesSort(sort: nil)
                 } else {
+                    // separate categories to free and premium
                     HStack{
                         Text("freePacks".changeLocale(lang: language))
                             .foregroundStyle(.white)
@@ -79,6 +82,7 @@ struct MainPageGMView: View {
 extension MainPageGMView {
     
     func platesSort(sort: Bool?) -> some View {
+        // sorting categories. nil - show all, true - show free categories, false - premium ones
         ForEach(0..<(apiData.fetchData?.appDataValue.count ?? 1), id: \.self){ index in
             if let item = apiData.fetchData?.appDataValue[index] {
                 if sort == nil {
@@ -98,7 +102,7 @@ extension MainPageGMView {
     
     func platesView(item: AppData, index: Int) -> some View {
         HStack{
-//            Image(item.appCategoryTitleEnValue)
+            // just show needed categories
             Image(uiImage: UIImage(named: item.appCategoryTitleEnValue) ?? UIImage(named: "MyPack")!)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -201,8 +205,3 @@ extension MainPageGMView {
 #Preview {
     MainPageView()
 }
-
-
-/*
- 
- */

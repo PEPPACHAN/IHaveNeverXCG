@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct MainGameFieldView: View {
-    @State private var currentPage: Int = 0
-    @State private var currentPage2: Int = 0
-    @State private var currentOffsetX: CGFloat = 0
+    // main game field page
+    @State private var currentPage: Int = 0 // current page for showing cards with animations
+    @State private var currentPage2: Int = 0 // duplicate first one but without animation for logic and crush fix
+    @State private var currentOffsetX: CGFloat = 0 // offset for listing cards outside screen
     @StateObject private var gameInfo = GameInfo.shared
     @StateObject private var apiService = APIService.shared
-    @State private var titleOffsetY: CGFloat = 0
-    @State private var isExitButtonPressed: Bool = false
-    @State private var isDone: Bool = false
-    @AppStorage("language") private var language = ""
-    @AppStorage("countGames") private var isFirstGame = true
+    @State private var titleOffsetY: CGFloat = 0 // offset for title. its go down after all cards used
+    @State private var isExitButtonPressed: Bool = false // state of chivron.left button to exit game
+    @State private var isDone: Bool = false // change value when cards is passed and retry button pressed
+    @AppStorage("language") private var language = "" // language from bundle
+    @AppStorage("countGames") private var isFirstGame = true // property to show rate view. true - its first time and we need show it, false - its >1 game and view doesn't need to show
     @State private var showRating: Bool = false
-    @State private var textOffsetY: CGFloat = 0
+    @State private var textOffsetY: CGFloat = 0 // offset of text in cards if user haves iphone se. data is out from pages and its need spetial offset
     
     private let screen = UIScreen.main.bounds
     
@@ -28,10 +29,10 @@ struct MainGameFieldView: View {
             VStack(spacing: 10) {
                 VStack{
                     HStack{
-                        Image(systemName: "chevron.left")
+                        Image(systemName: "chevron.left") // exit button
                             .font(.system(size: 27))
                             .foregroundStyle(Color.white)
-                            .offset(y: isDone ? hasRoundedCorners() ? -235: -190: 0)
+                            .offset(y: isDone ? hasRoundedCorners() ? -235: -190: 0) // need to save button position save when game is ended and title with cards count go down
                             .onTapGesture {
                                 isExitButtonPressed.toggle()
                             }
@@ -40,7 +41,7 @@ struct MainGameFieldView: View {
                         
                         VStack{
                             if isDone {
-                                Image(systemName: "checkmark.circle.fill")
+                                Image(systemName: "checkmark.circle.fill") // complete icon after cards ended
                                     .font(.system(size: 92.97))
                                     .foregroundStyle(
                                         LinearGradient(colors: [
@@ -51,11 +52,11 @@ struct MainGameFieldView: View {
                                     )
                                     .padding(.bottom, 12.52)
                             }
-                            Text(gameInfo.categoryName[currentPage])
+                            Text(gameInfo.categoryName[currentPage]) // cards text
                                 .font(.custom("inter", size: 24.74))
                                 .fontWeight(.heavy)
                                 .foregroundStyle(Color.white)
-                            Text(String(describing: gameInfo.gameData.count) + "cards".localizedPlural(gameInfo.gameData.count, lang: language))
+                            Text(String(describing: gameInfo.gameData.count) + "cards".localizedPlural(gameInfo.gameData.count, lang: language)) // cards image or default "MyPack" image
                                 .font(.custom("inter", size: 15.53))
                                 .fontWeight(.medium)
                                 .foregroundStyle(Color.white.opacity(0.37))
@@ -97,17 +98,17 @@ struct MainGameFieldView: View {
                         ForEach((currentPage..<min(currentPage + 3, gameInfo.gameData.count)).reversed(), id: \.self) { index in
                             RoundedRectangle(cornerRadius: 18)
                                 .fill(index == currentPage
-                                      ? Color.white // Верхняя карта
+                                      ? Color.white // face card
                                       : index == currentPage + 1
-                                      ? Color(red: 243/255, green: 241/255, blue: 248/255, opacity: 1) // Вторая карта
-                                      : Color(red: 238/255, green: 237/255, blue: 238/255, opacity: 0.75)) // Третья карта
-                                .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * -20)
+                                      ? Color(red: 243/255, green: 241/255, blue: 248/255, opacity: 1) // second card
+                                      : Color(red: 238/255, green: 237/255, blue: 238/255, opacity: 0.75)) // last card in behind
+                                .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * -20) // logic to skip cards in right side of screen and return them from there
                                 .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
                                 .animation(.easeInOut, value: currentPage)
                                 .frame(width: screen.width/1.16, height: screen.height/1.9)
                                 .overlay {
                                     VStack(spacing: 71.21) {
-                                        Text(gameInfo.gameData[index].appCardTextValue.capitalizeFirstLetter())
+                                        Text(gameInfo.gameData[index].appCardTextValue.capitalizeFirstLetter()) // game text with capitalize first letter
                                             .font(.custom("inter", size: 24.66))
                                             .fontWeight(.bold)
                                             .frame(maxWidth: screen.width/1.52, maxHeight: screen.height/8.11)
@@ -116,7 +117,7 @@ struct MainGameFieldView: View {
                                             .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * textOffsetY)
                                             .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
                                             .animation(.easeInOut, value: currentPage)
-                                        Image(uiImage: UIImage(named: gameInfo.categoryNameEn[currentPage]) ?? UIImage(named: "MyPack")!)
+                                        Image(uiImage: UIImage(named: gameInfo.categoryNameEn[currentPage]) ?? UIImage(named: "MyPack")!) // image under the text
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
                                             .frame(width: 157.88, height: 186.73)
@@ -133,6 +134,7 @@ struct MainGameFieldView: View {
                     .padding(.horizontal)
                     
                     HStack(spacing: 58) {
+                        // there is listing buttons
                         Button(action: {
                             if currentPage > 0 {
                                 currentPage2 -= 1
@@ -170,6 +172,7 @@ struct MainGameFieldView: View {
                     }
                     .padding(.bottom, 50)
                 }else{
+                    // game is done and control button becomes exit and retry buttons
                     VStack(spacing: 25){
                         Button(action: {
                             gameInfo.isGameStarted = false
@@ -247,6 +250,7 @@ struct MainGameFieldView: View {
 
 extension MainGameFieldView {
     func onTap() {
+        // skip or return cards on buttons pressed
         if currentPage2 == gameInfo.gameData.count-1 {
             withAnimation(.easeInOut(duration: 0.2)){
                 isDone.toggle()
@@ -268,6 +272,7 @@ extension MainGameFieldView {
     }
     
     func askView() -> some View {
+        // ask about exit the game
         Group{
             RoundedRectangle(cornerRadius: 23)
                 .foregroundStyle(Color.white)
@@ -314,6 +319,7 @@ extension MainGameFieldView {
     }
     
     func requestRating() -> some View {
+        // show rating page
         ZStack{
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

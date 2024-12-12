@@ -9,6 +9,7 @@ import Foundation
 
 extension String {
     func localizedPlural(_ count: Int, lang: String) -> String {
+        // translate words from bundle by plural values
         guard let path = Bundle.main.path(forResource: lang, ofType: "lproj"),
               let bundle = Bundle(path: path) else {
             return "\(self) couldn't be found in Localizable.stringsdict for language \(lang)"
@@ -18,6 +19,7 @@ extension String {
     }
     
     func changeLocale(lang: String) -> String{
+        // select language from bundle by burger and automatically
         guard let path = Bundle.main.path(forResource: lang, ofType: "lproj") else { print("localization path error"); return "" }
         let bundle = Bundle(path: path)
         
@@ -25,6 +27,7 @@ extension String {
     }
     
     func capitalizeFirstLetter() -> String {
+        // make first letter is upper in cards from MainGameFieldView.swift
         guard let first = self.first else { return self }
         return first.uppercased() + self.dropFirst().lowercased()
     }

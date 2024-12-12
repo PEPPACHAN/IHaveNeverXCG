@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RequestReviewView: View {
+    // page asking to rate us after first completed game
     @Environment(\.requestReview) var requestReview
     @AppStorage("countGames") private var isFirstGame = true
     @Binding var showRating: Bool

@@ -9,8 +9,9 @@ import SwiftUI
 import StoreKit
 
 struct FirstFeaturesPageView: View {
-    @AppStorage("wasShown") var wasShown: Bool = false
-    @AppStorage("language") private var language = ""
+    // first signed pages about application
+    @AppStorage("wasShown") var wasShown: Bool = false // state from userdefaults. if false it will show but after xmark click never show again
+    @AppStorage("language") private var language = "" // current language from bundle
     private let screen = UIScreen.main.bounds
     
     @State private var currentPage = 0
@@ -21,11 +22,12 @@ struct FirstFeaturesPageView: View {
         LinearGradient(colors: [Color.init(red: 42/255, green: 15/255, blue: 118/255), Color.init(red: 78/255, green: 28/255, blue: 220/255), Color.init(red: 42/255, green: 15/255, blue: 118/255)], startPoint: .top, endPoint: .bottom)
     ]
     
-    @StateObject private var products = PurchaseManager.shared
+    @StateObject private var products = PurchaseManager.shared // purchase manager for last page
     
     var body: some View {
         VStack{
             HStack {
+                // indicators of current page in top
                 ForEach(0..<4) { index in
                     Rectangle()
                         .foregroundStyle(index == currentPage ? .white : .gray.opacity(0.5))
@@ -33,7 +35,7 @@ struct FirstFeaturesPageView: View {
                         .clipShape(.capsule)
                         .animation(.easeInOut, value: currentPage)
                 }
-                Image(systemName: "xmark")
+                Image(systemName: "xmark") // xmark to close page
                     .foregroundStyle(Color.gray.opacity(0.5))
                     .offset(x: 20)
                     .opacity(currentPage == 3 ? 1: 0)
@@ -53,7 +55,7 @@ struct FirstFeaturesPageView: View {
                     .tag(1)
                 ThirdPageView()
                     .tag(2)
-                FourthPageView()
+                FourthPageView() // last page and main page to buy subscriptions in application
                     .tag(3)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -61,12 +63,12 @@ struct FirstFeaturesPageView: View {
             Button (action: {
                 if currentPage < 3{
                     withAnimation(.easeInOut(duration: 0.5)){
-                        currentPage+=1
+                        currentPage+=1 // switch pages with animation
                     }
                 } else {
                     Task{
                         do{
-                            try await products.purchase()
+                            try await products.purchase() // continue button change themself work logic from listing to purchase
                         }catch{
                             print(error.localizedDescription)
                         }
@@ -84,12 +86,13 @@ struct FirstFeaturesPageView: View {
             .offset(y: hasRoundedCorners() ? -28: 0)
             
             HStack {
+                // i have no data for this buttons
                 Text("Terms of Use")
                 Spacer()
                 Button {
                     Task {
                         do{
-                            try await AppStore.sync()
+                            try await AppStore.sync() // restore purchase request to apple servers
                         } catch {
                             print(error)
                         }

@@ -10,7 +10,7 @@ import SwiftUI
 struct AIModeView: View {
     @Environment(\.requestReview) var requestReview
     
-    @FocusState private var isTextfieldActive: Bool
+    @FocusState private var isTextfieldActive: Bool // textfields is focused state to show and hide keyboard
     
     @State private var modeName: String = ""
     @State private var selectedMode = ""
@@ -20,7 +20,7 @@ struct AIModeView: View {
     @State private var numberOfCards: String = ""
     @State private var tags: String = ""
     @AppStorage("language") private var language = ""
-    @AppStorage("isFirstAiGame") private var isFirstAiGame: Bool = true
+    @AppStorage("isFirstAiGame") private var isFirstAiGame: Bool = true // state from userdefaults to show rating page if its first ai usage
     
     var body: some View {
         Group {
@@ -37,7 +37,7 @@ struct AIModeView: View {
                     .padding(hasRoundedCorners() ? 16: 5)
                 
                 if !isLoading {
-                    TextField("modeName".changeLocale(lang: language), text: $modeName)
+                    TextField("modeName".changeLocale(lang: language), text: $modeName) // MARK: bug is here. in iphone se it doesn't work if tag was changed
                         .font(.custom("inter", size: 16))
                         .fontWeight(.medium)
                         .focused($isTextfieldActive)
@@ -105,7 +105,7 @@ struct AIModeView: View {
                         
                         ZStack(alignment: .topLeading){
                             if tags.isEmpty{
-                                Text("briefTagsForTheGist".changeLocale(lang: language))
+                                Text("briefTagsForTheGist".changeLocale(lang: language)) // tags field
                                     .font(.custom("inter", size: 16))
                                     .focused($isTextfieldActive)
                                     .fontWeight(.medium)
@@ -124,6 +124,7 @@ struct AIModeView: View {
                     }
                 }
                 Button(action:{
+                    // now it doesn't work. i have no documentation about creating category post request body
                     if (modeName != "" && selectedMode != "" && numberOfCards != "" && tags != ""){
                         withAnimation(.easeInOut(duration: 0.3)){
                             self.isLoading.toggle()
@@ -176,6 +177,7 @@ struct AIModeView: View {
 
 extension AIModeView {
     func modeSelection() -> some View {
+        // show list of category after button pressed
         ScrollView{
             VStack(alignment: .leading){
                 ForEach(mode.modes, id: \.self){ item in

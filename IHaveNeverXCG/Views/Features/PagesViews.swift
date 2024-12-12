@@ -113,6 +113,7 @@ struct ThirdPageView: View {
     }
 }
 
+// MARK: main purchase page in app and last page in first times entry page
 struct FourthPageView: View {
     @StateObject private var products = PurchaseManager.shared
     @AppStorage("language") private var language = ""
@@ -262,6 +263,7 @@ struct FourthPageView: View {
             .offset(y: hasRoundedCorners() ? 0: -10)
             
             if products.isPurchasedShow{
+                // all of this hidden while it shown in first entry page. its will show if we call it from burger
                 VStack{
                     Button (action: {
                         Task{

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoadingView: View {
+    // loading circle
     var color: Color
     var size: CGFloat
     @State private var isAnimating: Bool = false
