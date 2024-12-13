@@ -10,15 +10,19 @@ import SwiftUI
 struct MainPageView: View {
     // main page. its just connect all views
     @AppStorage("wasShown") private var wasShown: Bool = false
+    @AppStorage("language") private var language = ""
+    @AppStorage("customCards") private var customCards = Data()
     @State private var retryTimer: Timer? = nil
     
     @StateObject private var apiData = APIService.shared
     @StateObject private var gameInfo = GameInfo.shared
     @StateObject private var products = PurchaseManager.shared
+    @StateObject private var customCardInfo = CustomCardsManager.shared
+    @State private var decodedCustomCards: [CustomCards] = []
     @State private var burgerShowing: Bool = false
     @State private var selectedTab: Bool = false
     @State private var selectedInfo: Int?
-    @AppStorage("language") private var language = ""
+    
     
     private let screen = UIScreen.main.bounds
     
@@ -187,6 +191,9 @@ struct MainPageView: View {
         .onAppear{
             if language == "" {
                 language = Locale.current.language.languageCode?.identifier ?? "en"
+            }
+            if customCardInfo.cards.isEmpty {
+                customCardInfo.decodeData(customCards)
             }
             loadDataWithRetry(lang: language)
         }

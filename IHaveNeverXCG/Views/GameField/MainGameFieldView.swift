@@ -330,7 +330,7 @@ extension MainGameFieldView {
                     showRating = false
                     gameInfo.isGameStarted = false
                 }
-            RequestReviewView(showRating: $showRating, isExitButtonPressed: $isExitButtonPressed)
+            RequestReviewView(showRating: $showRating, isRatingPresent: $isExitButtonPressed)
         }
     }
 }

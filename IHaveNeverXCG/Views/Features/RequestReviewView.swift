@@ -12,7 +12,8 @@ struct RequestReviewView: View {
     @Environment(\.requestReview) var requestReview
     @AppStorage("countGames") private var isFirstGame = true
     @Binding var showRating: Bool
-    @Binding var isExitButtonPressed: Bool
+    @Binding var isRatingPresent: Bool
+    
     
     var body: some View {
         RoundedRectangle(cornerRadius: 23)
@@ -33,7 +34,7 @@ struct RequestReviewView: View {
                     Button {
                         requestReview()
                         showRating = false
-                        isExitButtonPressed = true
+                        isRatingPresent = true
                         isFirstGame = false
                     } label: {
                         Text("Share Love")

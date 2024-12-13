@@ -146,6 +146,7 @@ final class PurchaseManager: ObservableObject {
 }
 
 func hasRoundedCorners() -> Bool {
+    // check iphone screen type. rounded angle or not
     let keyWindow = UIApplication.shared.connectedScenes
         .compactMap { $0 as? UIWindowScene }
         .flatMap { $0.windows }
@@ -153,4 +154,29 @@ func hasRoundedCorners() -> Bool {
     
     let safeAreaInsets = keyWindow?.safeAreaInsets ?? .zero
     return safeAreaInsets.top > 20 || safeAreaInsets.bottom > 0
+}
+
+// MARK: Custom cards manager
+final class CustomCardsManager: ObservableObject {
+    static let shared = CustomCardsManager()
+    @Published var cards: [CustomCards] = []
+    
+    func encodeData(newItem: CustomCards) -> Data {
+        do {
+            cards.append(newItem)
+            let data = try JSONEncoder().encode(cards)
+            return data
+        } catch {
+            print(error.localizedDescription)
+            return Data()
+        }
+    }
+    
+    func decodeData(_ data: Data) {
+        do {
+            cards = try JSONDecoder().decode([CustomCards].self, from: data)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }

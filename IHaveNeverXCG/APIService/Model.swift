@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: For all default data
 struct IHNFetchAll: Decodable {
     let appErrorValue: Bool
     let appStatValue: AppStat
@@ -45,7 +46,26 @@ struct AppCard: Decodable {
     let appTotalDislikesValue: Int
     let appIsCustomValue: Bool
     let appStateValue: Bool
-    let appCreatedByTokenValue: String?
-    let appCardOpenedByUserValue: Bool
     let appUpdatedAtValue: String
+}
+
+// MARK: For custom cards
+struct FetchAllCustom: Decodable {
+    let appErrorValue: Bool
+    let appMessagesValue: [String]
+    let appDataValue: [AppCategory]
+}
+
+struct AppCategory: Decodable {
+    let appCategoryIdValue: Int
+    let appCategoryTitleValue: String
+    let appCategoryTitleEnValue: String
+    let appCategoryCardsValue: [AppCard]
+    let appUpdatedAtValue: String?
+}
+
+// MARK: Model for saving in userDefaults
+struct CustomCards: Codable {
+    let name: String
+    let uuid: String
 }
