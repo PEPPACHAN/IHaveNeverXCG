@@ -34,6 +34,7 @@ struct AIModeView: View {
     @State private var aiCards: [String] = []
     @AppStorage("language") private var language = ""
     @AppStorage("isFirstAiGame") private var isFirstAiGame: Bool = true // state from userdefaults to show rating page if its first ai usage
+    private let screen = UIScreen.main.bounds
     
     var body: some View {
         ZStack{
@@ -185,19 +186,24 @@ struct AIModeView: View {
                     } else {
                         // ai pack created
                         VStack{
-                            VStack{
+                            VStack(alignment: .leading){
                                 Image("MyPack")
                                     .resizable()
                                     .frame(width: 103.28, height: 103.28)
+                                Spacer()
                                 Text(modeName.capitalizeFirstLetter())
                                     .foregroundStyle(.white)
                                     .font(.custom("inter", size: 21.57))
                                     .fontWeight(.heavy)
-                                Text(String(describing: aiCards.count) + "cards".localizedPlural(aiCards, lang: language))
+                                Text(String(describing: aiCards.count) + "cards".localizedPlural(aiCards.count, lang: language))
                                     .foregroundStyle(.white.opacity(0.37))
                                     .font(.custom("inter", size: 16.39))
                                     .fontWeight(.medium)
                             }
+                            .frame(width: screen.width/2.06, height: screen.height/3.88, alignment: .leading)
+                            .padding(.vertical, 24)
+                            .padding(.horizontal, 27.13)
+                            .padding(.top)
                             .background(
                                 LinearGradient(colors: [
                                     Color.init(red: 27/255, green: 28/255, blue: 66/255),
@@ -205,6 +211,23 @@ struct AIModeView: View {
                                 ], startPoint: .topLeading, endPoint: .bottomTrailing)
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 24.58))
+                            .padding(.top)
+                            
+                            Text("youCanPlay".changeLocale(lang: language))
+                                .foregroundStyle(.black)
+                                .font(.custom("inter", size: 14.96))
+                                .fontWeight(.regular)
+                                .frame(width: 227.35, height: 36)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.5)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 76.62)
+                                .multilineTextAlignment(.center)
+                                .background(Color.init(red: 236/255, green: 248/255, blue: 249/255))
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .padding(.horizontal, 29.13)
+                                .padding(.bottom, -20)
+                                .padding(.top, 82.1)
                             
                             Button(action:{
                                 withAnimation(.easeInOut(duration: 0.3)){
@@ -222,7 +245,9 @@ struct AIModeView: View {
                                     .padding()
                             }
                             .padding()
+                            .padding(.bottom, -20)
                         }
+//                        .padding(.top, screen.height/7.79)
                     }
                 }
                 .onAppear{
