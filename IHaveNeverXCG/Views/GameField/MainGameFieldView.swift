@@ -108,7 +108,7 @@ struct MainGameFieldView: View {
                                 .frame(width: screen.width/1.16, height: screen.height/1.9)
                                 .overlay {
                                     VStack(spacing: 71.21) {
-                                        Text(gameInfo.gameData[index].appCardTextValue.capitalizeFirstLetter()) // game text with capitalize first letter
+                                        Text(gameInfo.gameData[index].capitalizeFirstLetter()) // game text with capitalize first letter
                                             .font(.custom("inter", size: 24.66))
                                             .fontWeight(.bold)
                                             .frame(maxWidth: screen.width/1.52, maxHeight: screen.height/8.11)

@@ -51,7 +51,7 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <StoreKitConfigurationFileReference
-         identifier = "../../SubscriptionsConfiguration.storekit 18-24-41-311.storekit">
+         identifier = "../../Controller/SubscriptionsConfiguration.storekit 18-24-41-311.storekit">
       </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction

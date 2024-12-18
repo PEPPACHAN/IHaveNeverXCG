@@ -71,6 +71,11 @@ struct MainPageGMView: View {
             }
             .padding(.bottom, !gameInfo.selectedIndex.isEmpty ? screen.height/9 : 0)
         }
+        .onAppear {
+            Task{
+                await products.updatePurchasedProducts()
+            }
+        }
         .scrollIndicators(.hidden)
         .padding([.top, .leading, .trailing])
         .padding(.bottom, hasRoundedCorners() ? 16: 5)

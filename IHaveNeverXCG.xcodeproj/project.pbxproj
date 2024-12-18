@@ -7,23 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC505E902D131CC3008596EF /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit in Resources */ = {isa = PBXBuildFile; fileRef = FC505E8D2D131CC3008596EF /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */; };
+		FC505E912D131CC3008596EF /* CardsData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC505E8A2D131CC3008596EF /* CardsData.xcdatamodeld */; };
+		FC505E922D131CC3008596EF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC505E8C2D131CC3008596EF /* Persistence.swift */; };
+		FC505E932D131CC3008596EF /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC505E8B2D131CC3008596EF /* Controller.swift */; };
 		FC62503E2D0B031B00C14A5A /* Inter-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC62503C2D0B031B00C14A5A /* Inter-VariableFont_opsz,wght.ttf */; };
 		FC6250472D0B033B00C14A5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC62503F2D0B033B00C14A5A /* Assets.xcassets */; };
 		FC6250492D0B033B00C14A5A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6250402D0B033B00C14A5A /* ContentView.swift */; };
-		FC62504A2D0B033B00C14A5A /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6250412D0B033B00C14A5A /* Controller.swift */; };
 		FC62504B2D0B033B00C14A5A /* IHaveNeverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6250422D0B033B00C14A5A /* IHaveNeverApp.swift */; };
-		FC62509D2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit in Resources */ = {isa = PBXBuildFile; fileRef = FC62509C2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */; };
 		FC7155E52D0B01EB00175458 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC7155E32D0B01EB00175458 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CF6A61F1B8D1870FF63AED7B /* IHaveNever.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IHaveNever.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC505E8B2D131CC3008596EF /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
+		FC505E8C2D131CC3008596EF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		FC505E8D2D131CC3008596EF /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SubscriptionsConfiguration.storekit 18-24-41-311.storekit"; sourceTree = "<group>"; };
+		FC505E8F2D131CC3008596EF /* CardsData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CardsData.xcdatamodel; sourceTree = "<group>"; };
 		FC62503C2D0B031B00C14A5A /* Inter-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
 		FC62503F2D0B033B00C14A5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC6250402D0B033B00C14A5A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		FC6250412D0B033B00C14A5A /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		FC6250422D0B033B00C14A5A /* IHaveNeverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IHaveNeverApp.swift; sourceTree = "<group>"; };
-		FC62509C2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SubscriptionsConfiguration.storekit 18-24-41-311.storekit"; sourceTree = "<group>"; };
 		FC7155E32D0B01EB00175458 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -45,10 +49,9 @@
 		E8646D76BB9F1DA5BBFCDE30 = {
 			isa = PBXGroup;
 			children = (
-				FC62509C2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */,
+				FC505E8E2D131CC3008596EF /* Controller */,
 				FC62503F2D0B033B00C14A5A /* Assets.xcassets */,
 				FC6250402D0B033B00C14A5A /* ContentView.swift */,
-				FC6250412D0B033B00C14A5A /* Controller.swift */,
 				FC6250422D0B033B00C14A5A /* IHaveNeverApp.swift */,
 				FC62503D2D0B031B00C14A5A /* Fonts */,
 				FC7155E42D0B01EB00175458 /* Preview Content */,
@@ -57,6 +60,17 @@
 				FC7155472D0AFA7C00175458 /* Views */,
 				344030ECF3F0CBAC452D5782 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		FC505E8E2D131CC3008596EF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FC505E8A2D131CC3008596EF /* CardsData.xcdatamodeld */,
+				FC505E8B2D131CC3008596EF /* Controller.swift */,
+				FC505E8C2D131CC3008596EF /* Persistence.swift */,
+				FC505E8D2D131CC3008596EF /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		FC62503D2D0B031B00C14A5A /* Fonts */ = {
@@ -135,7 +149,7 @@
 			files = (
 				FC7155E52D0B01EB00175458 /* Preview Assets.xcassets in Resources */,
 				FC62503E2D0B031B00C14A5A /* Inter-VariableFont_opsz,wght.ttf in Resources */,
-				FC62509D2D0B381400C14A5A /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit in Resources */,
+				FC505E902D131CC3008596EF /* SubscriptionsConfiguration.storekit 18-24-41-311.storekit in Resources */,
 				FC6250472D0B033B00C14A5A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,7 +162,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC6250492D0B033B00C14A5A /* ContentView.swift in Sources */,
-				FC62504A2D0B033B00C14A5A /* Controller.swift in Sources */,
+				FC505E912D131CC3008596EF /* CardsData.xcdatamodeld in Sources */,
+				FC505E922D131CC3008596EF /* Persistence.swift in Sources */,
+				FC505E932D131CC3008596EF /* Controller.swift in Sources */,
 				FC62504B2D0B033B00C14A5A /* IHaveNeverApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,6 +365,19 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FC505E8A2D131CC3008596EF /* CardsData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FC505E8F2D131CC3008596EF /* CardsData.xcdatamodel */,
+			);
+			currentVersion = FC505E8F2D131CC3008596EF /* CardsData.xcdatamodel */;
+			path = CardsData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 04F92CD300A52093C29601D4 /* Project object */;
 }

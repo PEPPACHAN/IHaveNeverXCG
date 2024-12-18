@@ -108,6 +108,11 @@ struct BurgerView: View {
                 burgerShowing = false
             }
         }
+        .onAppear {
+            Task{
+                await products.updatePurchasedProducts()
+            }
+        }
         .font(.custom("inter", size: 21.36))
         .fontWeight(.bold)
         .foregroundStyle(Color.black)

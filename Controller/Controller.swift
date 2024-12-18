@@ -13,7 +13,7 @@ import StoreKit
 final class GameInfo: ObservableObject {
     static let shared = GameInfo()
     
-    @Published var gameData: [AppCard] = [] // category collection for listing cards
+    @Published var gameData: [String] = [] // category collection for listing cards
     @Published var selectedIndex: [Int] = [] // selected category in main page
     @Published var categoryName: [String] = [] // category name on selected language for preview in game field
     @Published var categoryNameEn: [String] = [] // category name on english to select images from assets
@@ -22,7 +22,7 @@ final class GameInfo: ObservableObject {
     func addData(_ data: [AppCard], name: String, nameEn: String) {
         // function to add all you need data for game
         data.forEach { item in
-            gameData.append(item)
+            gameData.append(item.appCardTextValue)
             categoryName.append(name)
             categoryNameEn.append(nameEn)
         }
@@ -31,7 +31,25 @@ final class GameInfo: ObservableObject {
     func removeData(_ data: [AppCard], name: String, nameEn: String) {
         // function to remove data by index from all properties for game
         data.forEach { item in
-            gameData.removeAll(where: { $0.appCardIdValue == item.appCardIdValue })
+            gameData.removeAll(where: { $0 == item.appCardTextValue })
+            categoryName.removeAll(where: { $0 == name })
+            categoryName.removeAll(where: { $0 == nameEn })
+        }
+    }
+    
+    func addAIData(_ data: [String], name: String, nameEn: String) {
+        // function to add all you need data for game
+        data.forEach { item in
+            gameData.append(item)
+            categoryName.append(name)
+            categoryNameEn.append(nameEn)
+        }
+    }
+    
+    func removeAIData(_ data: [String], name: String, nameEn: String) {
+        // function to remove data by index from all properties for game
+        data.forEach { item in
+            gameData.removeAll(where: { $0 == item })
             categoryName.removeAll(where: { $0 == name })
             categoryName.removeAll(where: { $0 == nameEn })
         }
@@ -154,29 +172,4 @@ func hasRoundedCorners() -> Bool {
     
     let safeAreaInsets = keyWindow?.safeAreaInsets ?? .zero
     return safeAreaInsets.top > 20 || safeAreaInsets.bottom > 0
-}
-
-// MARK: Custom cards manager
-final class CustomCardsManager: ObservableObject {
-    static let shared = CustomCardsManager()
-    @Published var cards: [CustomCards] = []
-    
-    func encodeData(newItem: CustomCards) -> Data {
-        do {
-            cards.append(newItem)
-            let data = try JSONEncoder().encode(cards)
-            return data
-        } catch {
-            print(error.localizedDescription)
-            return Data()
-        }
-    }
-    
-    func decodeData(_ data: Data) {
-        do {
-            cards = try JSONDecoder().decode([CustomCards].self, from: data)
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
 }

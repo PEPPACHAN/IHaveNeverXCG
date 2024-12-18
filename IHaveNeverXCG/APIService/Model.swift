@@ -49,23 +49,30 @@ struct AppCard: Decodable {
     let appUpdatedAtValue: String
 }
 
-// MARK: For custom cards
-struct FetchAllCustom: Decodable {
-    let appErrorValue: Bool
-    let appMessagesValue: [String]
-    let appDataValue: [AppCategory]
+// MARK: AI Cards
+struct AICards: Decodable {
+    let candidates: [Candidate]
+    let usageMetadata: UsageMetadata
+    let modelVersion: String
 }
 
-struct AppCategory: Decodable {
-    let appCategoryIdValue: Int
-    let appCategoryTitleValue: String
-    let appCategoryTitleEnValue: String
-    let appCategoryCardsValue: [AppCard]
-    let appUpdatedAtValue: String?
+struct Candidate: Decodable {
+    let content: Content
+    let finishReason: String
+    let avgLogprobs: Double
 }
 
-// MARK: Model for saving in userDefaults
-struct CustomCards: Codable {
-    let name: String
-    let uuid: String
+struct Content: Decodable {
+    let parts: [Part]
+    let role: String
+}
+
+struct Part: Decodable {
+    let text: String
+}
+
+struct UsageMetadata: Decodable {
+    let promptTokenCount: Int
+    let candidatesTokenCount: Int
+    let totalTokenCount: Int
 }
