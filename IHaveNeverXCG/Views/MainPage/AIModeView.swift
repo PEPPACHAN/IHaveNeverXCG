@@ -12,7 +12,7 @@ struct AIModeView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \CustomCards.id, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \CustomCards.id, ascending: false)],
         animation: .default)
     private var cardsData: FetchedResults<CustomCards>
     
@@ -124,7 +124,7 @@ struct AIModeView: View {
                                     if tags.isEmpty{
                                         Text("briefTagsForTheGist".changeLocale(lang: language)) // tags field
                                             .font(.custom("inter", size: 16))
-                                            .focused($isTags)
+                                            .focused($isTags) // MARK: Doesn't work
                                             .fontWeight(.medium)
                                             .foregroundStyle(.black.opacity(0.3))
                                             .padding(.top, 26)
@@ -231,7 +231,7 @@ struct AIModeView: View {
                             
                             Button(action:{
                                 withAnimation(.easeInOut(duration: 0.3)){
-                                    gameInfo.addAIData(aiCards, name: modeName, nameEn: modeName+".")
+                                    gameInfo.addAIData(aiCards, name: modeName, nameEn: modeName)
                                     gameInfo.isGameStarted = true
                                 }
                             }){
@@ -323,10 +323,11 @@ extension AIModeView {
                 viewContext.performAndWait {
                     do {
                         let newItems = CustomCards(context: viewContext)
-                        newItems.id = UUID()
+                        newItems.id = (cardsData.first?.id ?? 0) + 1
                         newItems.cardsCount = Int16(data.prefix(Int(numberOfCards) ?? 0).count)
                         newItems.collectionName = modeName.capitalizeFirstLetter()
                         newItems.cardsArray = try JSONSerialization.data(withJSONObject: Array(data.prefix(Int(numberOfCards) ?? 0)), options: [])
+                        newItems.tags = tags
                         do{
                             try viewContext.save()
                         }catch{

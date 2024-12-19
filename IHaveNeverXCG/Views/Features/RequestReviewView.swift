@@ -11,6 +11,7 @@ struct RequestReviewView: View {
     // page asking to rate us after first completed game
     @Environment(\.requestReview) var requestReview
     @AppStorage("countGames") private var isFirstGame = true
+    @AppStorage("isFirstAiGame") private var isFirstAiGame: Bool = true
     @Binding var showRating: Bool
     @Binding var isRatingPresent: Bool
     
@@ -36,6 +37,7 @@ struct RequestReviewView: View {
                         showRating = false
                         isRatingPresent = true
                         isFirstGame = false
+                        isFirstAiGame = false
                     } label: {
                         Text("Share Love")
                             .foregroundStyle(.white)

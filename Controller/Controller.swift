@@ -17,14 +17,18 @@ final class GameInfo: ObservableObject {
     @Published var selectedIndex: [Int] = [] // selected category in main page
     @Published var categoryName: [String] = [] // category name on selected language for preview in game field
     @Published var categoryNameEn: [String] = [] // category name on english to select images from assets
+    @Published var indexArray: [Int] = [] // need for integrating shuffle with a minimum changes in code
     @Published var isGameStarted: Bool = false // state of game. true - game started and game field open, false - game is ended and game field close
     
     func addData(_ data: [AppCard], name: String, nameEn: String) {
         // function to add all you need data for game
+        var index = gameData.count
         data.forEach { item in
             gameData.append(item.appCardTextValue)
             categoryName.append(name)
             categoryNameEn.append(nameEn)
+            indexArray.append(index+1)
+            index += 1
         }
     }
     
@@ -34,24 +38,31 @@ final class GameInfo: ObservableObject {
             gameData.removeAll(where: { $0 == item.appCardTextValue })
             categoryName.removeAll(where: { $0 == name })
             categoryName.removeAll(where: { $0 == nameEn })
+            indexArray.remove(at: indexArray.count-1)
+            print(indexArray.count)
         }
     }
     
     func addAIData(_ data: [String], name: String, nameEn: String) {
         // function to add all you need data for game
+        var index = gameData.count
         data.forEach { item in
-            gameData.append(item)
+            gameData.append(item+".")
             categoryName.append(name)
             categoryNameEn.append(nameEn)
+            indexArray.append(index)
+            index += 1
         }
     }
     
     func removeAIData(_ data: [String], name: String, nameEn: String) {
         // function to remove data by index from all properties for game
         data.forEach { item in
-            gameData.removeAll(where: { $0 == item })
+            gameData.removeAll(where: { $0 == item+"." })
             categoryName.removeAll(where: { $0 == name })
             categoryName.removeAll(where: { $0 == nameEn })
+            indexArray.remove(at: indexArray.count-1)
+            print(indexArray.count)
         }
     }
 }

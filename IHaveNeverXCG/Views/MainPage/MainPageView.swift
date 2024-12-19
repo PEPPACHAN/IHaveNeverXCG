@@ -12,7 +12,7 @@ struct MainPageView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \CustomCards.id, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \CustomCards.id, ascending: false)],
         animation: .default)
     private var cardsData: FetchedResults<CustomCards>
     
@@ -146,7 +146,7 @@ struct MainPageView: View {
             }
             
             if gameInfo.isGameStarted {
-                MainGameFieldView()
+                MainGameFieldView(selectedTab: $selectedTab)
             }
             
             if products.isPurchasedShow {
@@ -200,6 +200,7 @@ struct MainPageView: View {
             gameInfo.isGameStarted = false
             gameInfo.categoryName = []
             gameInfo.categoryNameEn = []
+            gameInfo.indexArray = []
             if language == "" {
                 language = Locale.current.language.languageCode?.identifier ?? "en"
             }
@@ -210,7 +211,18 @@ struct MainPageView: View {
 
 extension MainPageView {
     private func showInfoView(index: Int) -> some View {
-        VStack(spacing: 49.4) {
+        var dataTitleEn: String?
+        var dataInfo: String?
+        let indexOffset = apiData.fetchData?.appDataValue.count ?? 0
+        
+        if index-indexOffset < 0 {
+            dataTitleEn = apiData.fetchData?.appDataValue[index].appCategoryTitleEnValue
+            dataInfo = apiData.fetchData?.appDataValue[index].appCategoryInfoValue
+        } else {
+            dataTitleEn = cardsData[index-(apiData.fetchData?.appDataValue.count ?? 0)].collectionName
+            dataInfo = cardsData[index-(apiData.fetchData?.appDataValue.count ?? 0)].tags
+        }
+        return VStack(spacing: 49.4) {
             HStack(alignment: .top){
                 Circle()
                     .frame(width: 46.66)
@@ -225,7 +237,7 @@ extension MainPageView {
                 
                 Spacer()
                 
-                Image(apiData.fetchData?.appDataValue[index].appCategoryTitleEnValue ?? "")
+                Image(dataTitleEn ?? "")
                     .resizable()
                     .frame(width: 141.36, height: 134.43)
                     .aspectRatio(contentMode: .fill)
@@ -250,7 +262,7 @@ extension MainPageView {
                     }
             }
             
-            Text(apiData.fetchData?.appDataValue[index].appCategoryInfoValue ?? "")
+            Text(dataInfo ?? "")
                 .font(.custom("inter", size: 20))
                 .fontWeight(.medium)
                 .foregroundStyle(.black)

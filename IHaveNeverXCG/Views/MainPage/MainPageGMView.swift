@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct MainPageGMView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \CustomCards.id, ascending: false)],
+        animation: .default)
+    private var cardsData: FetchedResults<CustomCards>
+    
     // showing plates for main page
     @StateObject private var apiData = APIService.shared
     @StateObject private var gameInfo = GameInfo.shared
@@ -22,6 +29,11 @@ struct MainPageGMView: View {
             Group{
                 if products.hasUnlockedPro {
                     // show all cards in one stack if premium activated
+                    
+                    // sorting categories. nil - show all, true - show free categories, false - premium ones
+                    ForEach(cardsData.indices, id: \.self) { index in
+                        aiPlatesView(index: index)
+                    }
                     platesSort(sort: nil)
                 } else {
                     // separate categories to free and premium
@@ -66,6 +78,9 @@ struct MainPageGMView: View {
                     }
                     .padding(.bottom, 14)
                     
+                    ForEach(cardsData.indices, id: \.self) { index in
+                        aiPlatesView(index: index)
+                    }
                     platesSort(sort: false)
                 }
             }
@@ -198,6 +213,117 @@ extension MainPageGMView {
                     } else {
                         gameInfo.selectedIndex.append(index)
                         gameInfo.addData(item.appCategoryCardsValue, name: item.appCategoryTitleValue, nameEn: item.appCategoryTitleEnValue)
+                    }
+                } else {
+                    products.isPurchasedShow = true
+                }
+            }
+        }
+    }
+    
+    func aiPlatesView(index: Int) -> some View {
+        let indexOffset = apiData.fetchData?.appDataValue.count ?? 0
+        let index = Int(index) + indexOffset
+        return HStack{
+            // just show needed categories
+            Image(uiImage: UIImage(named: "MyPack")!)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 59.58, height: 56.62)
+                .padding(.vertical, 19.66)
+                .padding(.leading, 24.36)
+                .padding(.trailing, 23.78)
+            VStack(alignment: .leading){
+                Text(String(describing: cardsData[index-indexOffset].collectionName ?? ""))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .foregroundStyle(Color.white)
+                    .font(.custom("inter", size: 19.57))
+                    .fontWeight(.heavy)
+                
+                Text(String(describing: cardsData[index-indexOffset].cardsCount) + "cards".localizedPlural(Int(cardsData[index-indexOffset].cardsCount), lang: language))
+                    .font(.custom("inter", size: 14.87))
+                    .fontWeight(.medium)
+                    .foregroundStyle(Color.white.opacity(0.37))
+                
+                Text("AI PACK")
+                    .font(.custom("inter", size: 11.76))
+                    .fontWeight(.heavy)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .foregroundStyle(Color.white)
+                    .font(.custom("inter", size: 12.96))
+                    .fontWeight(.heavy)
+                    .background(Color.white.opacity(0.09))
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: 19.31)
+                    )
+                    .padding(.top, -5)
+                    .padding(.bottom, 6)
+            }
+            Spacer()
+            Button(action:{
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    if products.hasUnlockedPro {
+                        do{
+                            let cardsArray = try JSONSerialization.jsonObject(with: cardsData[index-indexOffset].cardsArray ?? Data("[]".utf8))
+                            selectedInfo = index
+                            if !gameInfo.selectedIndex.contains(where: { $0 == index }) {
+                                gameInfo.selectedIndex.append(index)
+                                gameInfo.addAIData(cardsArray as! [String], name: cardsData[index-indexOffset].collectionName ?? "", nameEn: cardsData[index-indexOffset].collectionName ?? "")
+                            }
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    } else {
+                        products.isPurchasedShow = true
+                    }
+                }
+            }){
+                Circle()
+                    .frame(width: 28.37)
+                    .foregroundStyle(Color.white.opacity(0.12))
+                    .overlay {
+                        Text("i")
+                            .foregroundStyle(Color.white.opacity(0.36))
+                            .font(.system(size: 16.62, weight: .heavy))
+                    }
+            }
+            
+            Image(systemName: gameInfo.selectedIndex.contains(where: { $0 == index }) ? "checkmark.circle.fill" : "circle.fill")
+                .font(.system(size: 28.37))
+                .foregroundStyle( !gameInfo.selectedIndex.contains(where: { $0 == index }) ?
+                                  Color.white.opacity(0.12) :
+                                    Color.white,
+                                  LinearGradient(colors: [
+                                    Color.init(red: 23/255, green: 168/255, blue: 143/255),
+                                    Color.init(red: 11/255, green: 140/255, blue: 117/255)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                )
+                .padding(.horizontal)
+        }
+        .frame(maxWidth: .infinity, maxHeight: 95.93, alignment: .leading)
+        .background(
+            LinearGradient(colors: [
+                Color.init(red: 27/255, green: 28/255, blue: 55/255),
+                Color.init(red: 43/255, green: 45/255, blue: 93/255)], startPoint: .topLeading, endPoint: .bottomTrailing)
+        )
+        .clipShape(
+            RoundedRectangle(cornerRadius: 27)
+        )
+        .onTapGesture {
+            withAnimation(.easeInOut(duration: 0.2)){
+                if products.hasUnlockedPro {
+                    do {
+                        let cardsArray = try JSONSerialization.jsonObject(with: cardsData[index-indexOffset].cardsArray ?? Data("[]".utf8))
+                        if gameInfo.selectedIndex.contains(where: { $0 == index }) {
+                            gameInfo.selectedIndex.removeAll(where: { $0 == index })
+                            gameInfo.removeAIData(cardsArray as! [String], name: cardsData[index-indexOffset].collectionName ?? "", nameEn: cardsData[index-indexOffset].collectionName ?? "")
+                        } else {
+                            gameInfo.selectedIndex.append(index)
+                            gameInfo.addAIData(cardsArray as! [String], name: cardsData[index-indexOffset].collectionName ?? "", nameEn: cardsData[index-indexOffset].collectionName ?? "")
+                        }
+                    } catch {
+                        print(error.localizedDescription)
                     }
                 } else {
                     products.isPurchasedShow = true

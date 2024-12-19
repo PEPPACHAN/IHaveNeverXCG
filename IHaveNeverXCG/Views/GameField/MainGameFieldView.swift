@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainGameFieldView: View {
+    @Binding var selectedTab: Bool
     // main game field page
     @State private var currentPage: Int = 0 // current page for showing cards with animations
     @State private var currentPage2: Int = 0 // duplicate first one but without animation for logic and crush fix
@@ -108,7 +109,7 @@ struct MainGameFieldView: View {
                                 .frame(width: screen.width/1.16, height: screen.height/1.9)
                                 .overlay {
                                     VStack(spacing: 71.21) {
-                                        Text(gameInfo.gameData[index].capitalizeFirstLetter()) // game text with capitalize first letter
+                                        Text(gameInfo.gameData[gameInfo.indexArray[index]].capitalizeFirstLetter()) // game text with capitalize first letter
                                             .font(.custom("inter", size: 24.66))
                                             .fontWeight(.bold)
                                             .frame(maxWidth: screen.width/1.52, maxHeight: screen.height/8.11)
@@ -117,7 +118,7 @@ struct MainGameFieldView: View {
                                             .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * textOffsetY)
                                             .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
                                             .animation(.easeInOut, value: currentPage)
-                                        Image(uiImage: UIImage(named: gameInfo.categoryNameEn[currentPage]) ?? UIImage(named: "MyPack")!) // image under the text
+                                        Image(uiImage: UIImage(named: gameInfo.categoryNameEn[gameInfo.indexArray[index]]) ?? UIImage(named: "MyPack")!) // image under the text
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
                                             .frame(width: 157.88, height: 186.73)
@@ -160,7 +161,8 @@ struct MainGameFieldView: View {
                         .disabled(currentPage2 == 0)
                         
                         Image(systemName: (currentPage2+1) == gameInfo.gameData.count ? "checkmark" :"chevron.right")
-                            .font(.system(size: hasRoundedCorners() ? 55.38: 30))
+                            .font(.system(size: hasRoundedCorners() ? (currentPage2+1) != gameInfo.gameData.count ? 55.38: 41 : 30)) // MARK: check on iphone se
+                            .padding(.leading, (currentPage2+1) != gameInfo.gameData.count ? 0: -3.5) // MARK: check on iphone se
                             .padding(12.72)
                             .padding(10)
                             .foregroundStyle(Color.white)
@@ -176,6 +178,7 @@ struct MainGameFieldView: View {
                     VStack(spacing: 25){
                         Button(action: {
                             gameInfo.isGameStarted = false
+                            selectedTab = false
                         }) {
                             Text("exitToMenu".changeLocale(lang: language))
                                 .font(.custom("inter", size: 16))
@@ -212,6 +215,7 @@ struct MainGameFieldView: View {
             } else {
                 textOffsetY = 0
             }
+            gameInfo.indexArray.shuffle()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
@@ -305,10 +309,12 @@ extension MainGameFieldView {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .onTapGesture {
                             if !isFirstGame{
+                                selectedTab = false
                                 isExitButtonPressed.toggle()
                                 gameInfo.isGameStarted = false
                             } else {
                                 showRating = true
+                                selectedTab = false
                                 isExitButtonPressed.toggle()
                             }
                         }
