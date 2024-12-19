@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainGameFieldView: View {
     @Binding var selectedTab: Bool
+    @Binding var hasNewItem: Bool
     // main game field page
     @State private var currentPage: Int = 0 // current page for showing cards with animations
     @State private var currentPage2: Int = 0 // duplicate first one but without animation for logic and crush fix
@@ -113,7 +114,8 @@ struct MainGameFieldView: View {
                                             .font(.custom("inter", size: 24.66))
                                             .fontWeight(.bold)
                                             .frame(maxWidth: screen.width/1.52, maxHeight: screen.height/8.11)
-                                            .minimumScaleFactor(0.5)
+                                            .lineLimit(3)
+                                            .minimumScaleFactor(0.7)
                                             .padding(.horizontal)
                                             .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * textOffsetY)
                                             .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
@@ -125,9 +127,6 @@ struct MainGameFieldView: View {
                                             .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * -20)
                                             .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
                                             .animation(.easeInOut, value: currentPage)
-//                                            .foregroundStyle(
-//                                                Color.init(red: 243/255, green: 243/255, blue: 243/255)
-//                                            )
                                     }
                                 }
                         }
@@ -161,8 +160,8 @@ struct MainGameFieldView: View {
                         .disabled(currentPage2 == 0)
                         
                         Image(systemName: (currentPage2+1) == gameInfo.gameData.count ? "checkmark" :"chevron.right")
-                            .font(.system(size: hasRoundedCorners() ? (currentPage2+1) != gameInfo.gameData.count ? 55.38: 41 : 30)) // MARK: check on iphone se
-                            .padding(.leading, (currentPage2+1) != gameInfo.gameData.count ? 0: -3.5) // MARK: check on iphone se
+                            .font(.system(size: hasRoundedCorners() ? (currentPage2+1) != gameInfo.gameData.count ? 55.38: 41 : (currentPage2+1) != gameInfo.gameData.count ? 30: 23))
+                            .padding(.leading, (currentPage2+1) != gameInfo.gameData.count ? 0: -3.5)
                             .padding(12.72)
                             .padding(10)
                             .foregroundStyle(Color.white)
@@ -216,6 +215,7 @@ struct MainGameFieldView: View {
                 textOffsetY = 0
             }
             gameInfo.indexArray.shuffle()
+            hasNewItem = false
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(

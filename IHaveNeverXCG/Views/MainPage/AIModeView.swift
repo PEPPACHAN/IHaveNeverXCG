@@ -22,6 +22,8 @@ struct AIModeView: View {
     @FocusState private var isNumberOfCard: Bool
     @FocusState private var isTags: Bool // textfields is focused state to show and hide keyboard
     
+    @Binding var hasNewItem: Bool
+    
     @State private var showRating: Bool = false
     @State private var modeName: String = ""
     @State private var selectedMode = ""
@@ -124,7 +126,6 @@ struct AIModeView: View {
                                     if tags.isEmpty{
                                         Text("briefTagsForTheGist".changeLocale(lang: language)) // tags field
                                             .font(.custom("inter", size: 16))
-                                            .focused($isTags) // MARK: Doesn't work
                                             .fontWeight(.medium)
                                             .foregroundStyle(.black.opacity(0.3))
                                             .padding(.top, 26)
@@ -132,6 +133,7 @@ struct AIModeView: View {
                                     }
                                     TextEditor(text: $tags)
                                         .scrollContentBackground(.hidden)
+                                        .focused($isTags)
                                         .frame(maxWidth: .infinity)
                                         .padding()
                                         .background(Color.init(.tertiarySystemFill))
@@ -227,7 +229,7 @@ struct AIModeView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
                                 .padding(.horizontal, 29.13)
                                 .padding(.bottom, -20)
-                                .padding(.top, 82.1)
+                                .padding(.top, hasRoundedCorners() ? 82.1: 20)
                             
                             Button(action:{
                                 withAnimation(.easeInOut(duration: 0.3)){
@@ -246,6 +248,9 @@ struct AIModeView: View {
                             }
                             .padding()
                             .padding(.bottom, -20)
+                        }
+                        .onAppear{
+                            hasNewItem = true
                         }
 //                        .padding(.top, screen.height/7.79)
                     }

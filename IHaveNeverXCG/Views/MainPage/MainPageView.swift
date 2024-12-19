@@ -27,6 +27,7 @@ struct MainPageView: View {
     @State private var burgerShowing: Bool = false
     @State private var selectedTab: Bool = false
     @State private var selectedInfo: Int?
+    @State private var hasNewItem: Bool = false
     
     
     private let screen = UIScreen.main.bounds
@@ -75,8 +76,27 @@ struct MainPageView: View {
                                     .foregroundStyle(!selectedTab ? Color.white : Color.init(red: 42/255, green: 15/255, blue: 118/255))
                                     .onTapGesture {
                                         withAnimation(.easeInOut(duration: 0.2)) {
+                                            hasNewItem = false
                                             selectedTab = false
                                         }
+                                    }
+                                    .overlay(alignment: .topTrailing) {
+                                        Text(hasNewItem ? "1": "")
+                                            .font(.custom("inter", size: 11.18))
+                                            .fontWeight(.bold)
+                                            .foregroundStyle(.white)
+                                            .frame(maxWidth: 6, maxHeight: 14)
+                                            .padding(.vertical, 2.5)
+                                            .padding(.horizontal, 6.5)
+                                            .background ( hasNewItem ?
+                                                          AnyView(LinearGradient(colors: [
+                                                              Color(red: 23/255, green: 168/255, blue: 143/255),
+                                                              Color(red: 11/255, green: 140/255, blue: 117/255)
+                                                          ], startPoint: .topLeading, endPoint: .bottomTrailing)) :
+                                                          AnyView(Color.clear)
+                                            ) // it calls compiler error because gradient and color is different type
+                                            .clipShape(Circle())
+                                            .offset(x: 1, y: -5)
                                     }
                                 Spacer()
                                 Text("aiMode".changeLocale(lang: language))
@@ -101,7 +121,7 @@ struct MainPageView: View {
                         MainPageGMView(selectedInfo: $selectedInfo)
                             .clipShape(RoundedCornersShape(corners: [.topLeft, .topRight], radius: 38))
                     } else {
-                        AIModeView()
+                        AIModeView(hasNewItem: $hasNewItem)
                             .clipShape(RoundedCornersShape(corners: [.topLeft, .topRight], radius: 38))
                     }
                 } else {
@@ -146,7 +166,7 @@ struct MainPageView: View {
             }
             
             if gameInfo.isGameStarted {
-                MainGameFieldView(selectedTab: $selectedTab)
+                MainGameFieldView(selectedTab: $selectedTab, hasNewItem: $hasNewItem)
             }
             
             if products.isPurchasedShow {
