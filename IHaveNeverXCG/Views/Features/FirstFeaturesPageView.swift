@@ -22,7 +22,7 @@ struct FirstFeaturesPageView: View {
         LinearGradient(colors: [Color.init(red: 42/255, green: 15/255, blue: 118/255), Color.init(red: 78/255, green: 28/255, blue: 220/255), Color.init(red: 42/255, green: 15/255, blue: 118/255)], startPoint: .top, endPoint: .bottom)
     ]
     
-    @StateObject private var products = PurchaseManager.shared // purchase manager for last page
+    @EnvironmentObject var purchaseManager: PurchaseManager // purchase manager for last page
     
     var body: some View {
         VStack{
@@ -68,7 +68,7 @@ struct FirstFeaturesPageView: View {
                 } else {
                     Task{
                         do{
-                            try await products.purchase() // continue button change themself work logic from listing to purchase
+                            try await purchaseManager.purchase() // continue button change themself work logic from listing to purchase
                         }catch{
                             print(error.localizedDescription)
                         }

@@ -85,7 +85,16 @@ final class PurchaseManager: ObservableObject {
     private var updates: Task<Void, Never>? = nil // subscribe to transaction updates in app
     
     init() {
+        Task {
+            await updatePurchasedProducts()
+            do {
+                try await loadProducts()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
         self.updates = observeTransactionUpdates()
+        scheduleSubscriptionCheck()
     }
     
     deinit {
@@ -170,6 +179,14 @@ final class PurchaseManager: ObservableObject {
             print("Transaction \(transaction.id) successfully processed and finished.")
         } catch {
             print("Failed to process transaction \(transaction.id): \(error)")
+        }
+    }
+    
+    func scheduleSubscriptionCheck() {
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
+            Task {
+                await self.updatePurchasedProducts()
+            }
         }
     }
 }

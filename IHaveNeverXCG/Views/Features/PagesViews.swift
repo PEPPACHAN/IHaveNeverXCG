@@ -115,19 +115,19 @@ struct ThirdPageView: View {
 
 // MARK: main purchase page in app and last page in first times entry page
 struct FourthPageView: View {
-    @StateObject private var products = PurchaseManager.shared
+    @EnvironmentObject var purchaseManager: PurchaseManager
     @AppStorage("language") private var language = ""
     
     var body: some View {
         VStack(spacing: 30){
-            if products.isPurchasedShow{
+            if purchaseManager.isPurchasedShow{
                 HStack{
                     Spacer()
                     Image(systemName: "xmark")
                         .foregroundStyle(Color.gray.opacity(0.5))
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.5)){
-                                products.isPurchasedShow = false
+                                purchaseManager.isPurchasedShow = false
                             }
                         }
                 }
@@ -208,7 +208,7 @@ struct FourthPageView: View {
                     }
                     .padding(.leading, 25)
                     Spacer()
-                    Image(systemName: products.choice == 1 ? "checkmark.circle.fill": "circle")
+                    Image(systemName: purchaseManager.choice == 1 ? "checkmark.circle.fill": "circle")
                         .font(.custom("inter", size: 22))
                         .foregroundStyle(Color.white)
                         .padding(.trailing, 25)
@@ -218,11 +218,11 @@ struct FourthPageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 100))
                 .overlay {
                     RoundedRectangle(cornerRadius: 100)
-                        .stroke(Color.white, lineWidth: products.choice == 1 ? 1: 0)
+                        .stroke(Color.white, lineWidth: purchaseManager.choice == 1 ? 1: 0)
                 }
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)){
-                        products.choice = 1
+                        purchaseManager.choice = 1
                     }
                 }
                 HStack(spacing: 15){
@@ -240,7 +240,7 @@ struct FourthPageView: View {
                     }
                     .padding(.horizontal, 25)
                     Spacer()
-                    Image(systemName: products.choice == 0 ? "checkmark.circle.fill": "circle")
+                    Image(systemName: purchaseManager.choice == 0 ? "checkmark.circle.fill": "circle")
                         .font(.custom("inter", size: 22))
                         .foregroundStyle(Color.white)
                         .padding(.horizontal, 25)
@@ -250,25 +250,25 @@ struct FourthPageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 100))
                 .overlay {
                     RoundedRectangle(cornerRadius: 100)
-                        .stroke(Color.white, lineWidth: products.choice == 0 ? 1: 0)
+                        .stroke(Color.white, lineWidth: purchaseManager.choice == 0 ? 1: 0)
                 }
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)){
-                        products.choice = 0
+                        purchaseManager.choice = 0
                     }
                 }
             }
-            .padding(products.isPurchasedShow ? hasRoundedCorners() ? 20: 0: 0)
+            .padding(purchaseManager.isPurchasedShow ? hasRoundedCorners() ? 20: 0: 0)
             .padding(.bottom, hasRoundedCorners() ? 0: -20)
             .offset(y: hasRoundedCorners() ? 0: -10)
             
-            if products.isPurchasedShow{
+            if purchaseManager.isPurchasedShow{
                 // all of this hidden while it shown in first entry page. its will show if we call it from burger
                 VStack{
                     Button (action: {
                         Task{
                             do{
-                                try await products.purchase()
+                                try await purchaseManager.purchase()
                             }catch{
                                 print(error.localizedDescription)
                             }
