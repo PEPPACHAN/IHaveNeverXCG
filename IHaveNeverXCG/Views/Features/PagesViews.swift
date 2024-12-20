@@ -208,7 +208,7 @@ struct FourthPageView: View {
                     }
                     .padding(.leading, 25)
                     Spacer()
-                    Image(systemName: purchaseManager.choice == 0 ? "checkmark.circle.fill": "circle")
+                    Image(systemName: purchaseManager.choice == 1 ? "checkmark.circle.fill": "circle")
                         .font(.custom("inter", size: 22))
                         .foregroundStyle(Color.white)
                         .padding(.trailing, 25)
@@ -218,11 +218,11 @@ struct FourthPageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 100))
                 .overlay {
                     RoundedRectangle(cornerRadius: 100)
-                        .stroke(Color.white, lineWidth: purchaseManager.choice == 0 ? 1: 0)
+                        .stroke(Color.white, lineWidth: purchaseManager.choice == 1 ? 1: 0)
                 }
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)){
-                        purchaseManager.choice = 0
+                        purchaseManager.choice = 1
                     }
                 }
                 HStack(spacing: 15){
@@ -240,7 +240,7 @@ struct FourthPageView: View {
                     }
                     .padding(.horizontal, 25)
                     Spacer()
-                    Image(systemName: purchaseManager.choice == 1 ? "checkmark.circle.fill": "circle")
+                    Image(systemName: purchaseManager.choice == 0 ? "checkmark.circle.fill": "circle")
                         .font(.custom("inter", size: 22))
                         .foregroundStyle(Color.white)
                         .padding(.horizontal, 25)
@@ -250,11 +250,11 @@ struct FourthPageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 100))
                 .overlay {
                     RoundedRectangle(cornerRadius: 100)
-                        .stroke(Color.white, lineWidth: purchaseManager.choice == 1 ? 1: 0)
+                        .stroke(Color.white, lineWidth: purchaseManager.choice == 0 ? 1: 0)
                 }
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)){
-                        purchaseManager.choice = 1
+                        purchaseManager.choice = 0
                     }
                 }
             }
