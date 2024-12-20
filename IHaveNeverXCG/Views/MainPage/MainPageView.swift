@@ -16,6 +16,8 @@ struct MainPageView: View {
         animation: .default)
     private var cardsData: FetchedResults<CustomCards>
     
+    @EnvironmentObject var purchaseManager: PurchaseManager
+    
     // main page. its just connect all views
     @AppStorage("wasShown") private var wasShown: Bool = false
     @AppStorage("language") private var language = ""
@@ -23,7 +25,6 @@ struct MainPageView: View {
     
     @StateObject private var apiData = APIService.shared
     @StateObject private var gameInfo = GameInfo.shared
-    @StateObject private var products = PurchaseManager.shared
     @State private var burgerShowing: Bool = false
     @State private var selectedTab: Bool = false
     @State private var selectedInfo: Int?
@@ -169,7 +170,7 @@ struct MainPageView: View {
                 MainGameFieldView(selectedTab: $selectedTab, hasNewItem: $hasNewItem)
             }
             
-            if products.isPurchasedShow {
+            if purchaseManager.isPurchasedShow { // MARK: switch to appHud
                 FourthPageView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(

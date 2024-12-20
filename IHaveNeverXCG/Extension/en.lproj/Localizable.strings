@@ -38,7 +38,8 @@
 "dirtySexCards" = "Dirty & Sex cards";
 "newContent" = "New content updates";
 "yearly" = "Yearly";
-"$90.00year" = "(then $90.00 /year)";
+"then" = "(then ";
+"year" = " /year)";
 "monthly" = "Monthly";
 "/month" = "$9.90 /month";
 "continue" = "Continue";

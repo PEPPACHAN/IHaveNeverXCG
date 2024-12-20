@@ -18,6 +18,8 @@ struct AIModeView: View {
     
     @Environment(\.requestReview) var requestReview
     
+    @EnvironmentObject var purchaseManager: PurchaseManager
+    
     @FocusState private var isNameField: Bool
     @FocusState private var isNumberOfCard: Bool
     @FocusState private var isTags: Bool // textfields is focused state to show and hide keyboard
@@ -28,7 +30,6 @@ struct AIModeView: View {
     @State private var modeName: String = ""
     @State private var selectedMode = ""
     @StateObject private var mode = APIService.shared
-    @StateObject private var purchase = PurchaseManager.shared
     @StateObject private var gameInfo = GameInfo.shared
     @State private var isSelection: Bool = false
     @State private var numberOfCards: String = ""
@@ -142,7 +143,7 @@ struct AIModeView: View {
                                 }
                             }
                             Button(action:{
-                                if purchase.hasUnlockedPro {
+                                if purchaseManager.hasUnlockedPro {
                                     if (modeName != "" && selectedMode != "" && numberOfCards != "" && tags != ""){
                                         withAnimation(.easeInOut(duration: 0.3)){
                                             mode.aiIsLoaded = true
@@ -156,7 +157,7 @@ struct AIModeView: View {
                                     isNameField = false
                                     isNumberOfCard = false
                                     isTags = false
-                                    purchase.isPurchasedShow = true
+                                    purchaseManager.isPurchasedShow = true
                                 }
                             }){
                                 Text("generate".changeLocale(lang: language))
@@ -310,11 +311,11 @@ struct AIModeView: View {
                 }
             }
         }
-        .onAppear {
-            Task{
-                await purchase.updatePurchasedProducts()
-            }
-        }
+//        .onAppear {
+//            Task{
+//                await purchase.updatePurchasedProducts() // MARK: switch to appHud
+//            }
+//        }
     }
 }
 
@@ -370,7 +371,6 @@ extension AIModeView {
         }
         .frame(height: isSelection ? .infinity: 0)
     }
-    
     
     func requestRating() -> some View {
         // show rating page

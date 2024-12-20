@@ -10,14 +10,13 @@ import StoreKit
 
 struct BurgerView: View {
     private let languagesArray = ["en", "de", "ru"]
+    @EnvironmentObject var purchaseManager: PurchaseManager
     
     @State private var retryTimer: Timer? = nil
     
     @AppStorage("language") private var language: String = ""
     @State private var isActive: Bool = false
     @Binding var burgerShowing: Bool
-    
-    @StateObject private var products = PurchaseManager.shared
     
     var body: some View {
         VStack(alignment: .leading, spacing: 39){
@@ -91,7 +90,7 @@ struct BurgerView: View {
             HStack {
                 // premium activated label
                 Image("crown")
-                Text(products.hasUnlockedPro ? "premiumActivated".changeLocale(lang: language) : "noPremiumAccess".changeLocale(lang: language)) // MARK: Translate to german
+                Text(purchaseManager.hasUnlockedPro ? "premiumActivated".changeLocale(lang: language) : "noPremiumAccess".changeLocale(lang: language))
                     .foregroundStyle(
                         LinearGradient(colors: [
                             Color.init(red: 42/255, green: 15/255, blue: 118/255),
@@ -102,17 +101,17 @@ struct BurgerView: View {
                     .fontWeight(.medium)
             }
             .onTapGesture {
-                if !products.hasUnlockedPro {
-                    products.isPurchasedShow = true
+                if !purchaseManager.hasUnlockedPro {
+                    purchaseManager.isPurchasedShow = true
                 }
                 burgerShowing = false
             }
         }
-        .onAppear {
-            Task{
-                await products.updatePurchasedProducts()
-            }
-        }
+//        .onAppear {
+//            Task{
+//                await purchaseManager.updatePurchasedProducts() // MARK: switch to appHud
+//            }
+//        }
         .font(.custom("inter", size: 21.36))
         .fontWeight(.bold)
         .foregroundStyle(Color.black)

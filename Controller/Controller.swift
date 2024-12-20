@@ -75,7 +75,7 @@ final class PurchaseManager: ObservableObject {
     
     private let productIds = ["ru.yearly.akhmed", "ru.monthly.akhmed"] // all products ids in app
     
-    @Published var choice: Int = 1 // choice of product. 1 - yearly, 2 - monthly
+    @Published var choice: Int = 0 // choice of product. 0 - yearly, 1 - monthly
     @Published var isPurchasedShow: Bool = false // state to showing purchase page
     
     @Published private(set) var products: [Product] = [] // list of products
@@ -85,7 +85,16 @@ final class PurchaseManager: ObservableObject {
     private var updates: Task<Void, Never>? = nil // subscribe to transaction updates in app
     
     init() {
+        Task {
+            await updatePurchasedProducts()
+            do {
+                try await loadProducts()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
         self.updates = observeTransactionUpdates()
+        scheduleSubscriptionCheck()
     }
     
     deinit {
@@ -100,8 +109,9 @@ final class PurchaseManager: ObservableObject {
     func loadProducts() async throws {
         // load products fron storeKit2
         guard !self.productsLoaded else { return }
-        self.products = try await Product.products(for: productIds)
+        self.products = try await Product.products(for: productIds).sorted(by: { $0.displayPrice > $1.displayPrice })
         self.productsLoaded = true
+        print(products)
     }
     
     func purchase() async throws {
@@ -170,6 +180,14 @@ final class PurchaseManager: ObservableObject {
             print("Transaction \(transaction.id) successfully processed and finished.")
         } catch {
             print("Failed to process transaction \(transaction.id): \(error)")
+        }
+    }
+    
+    func scheduleSubscriptionCheck() {
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
+            Task {
+                await self.updatePurchasedProducts()
+            }
         }
     }
 }

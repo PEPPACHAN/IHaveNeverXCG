@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainPageGMView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var purchaseManager: PurchaseManager
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \CustomCards.id, ascending: false)],
@@ -18,7 +19,6 @@ struct MainPageGMView: View {
     // showing plates for main page
     @StateObject private var apiData = APIService.shared
     @StateObject private var gameInfo = GameInfo.shared
-    @StateObject private var products = PurchaseManager.shared
     @Binding var selectedInfo: Int?
     @AppStorage("language") private var language = ""
     private let screen = UIScreen.main.bounds
@@ -27,7 +27,7 @@ struct MainPageGMView: View {
     var body: some View {
         ScrollView{
             Group{
-                if products.hasUnlockedPro {
+                if purchaseManager.hasUnlockedPro {
                     // show all cards in one stack if premium activated
                     
                     // sorting categories. nil - show all, true - show free categories, false - premium ones
@@ -86,11 +86,11 @@ struct MainPageGMView: View {
             }
             .padding(.bottom, !gameInfo.selectedIndex.isEmpty ? screen.height/9 : 0)
         }
-        .onAppear {
-            Task{
-                await products.updatePurchasedProducts()
-            }
-        }
+//        .onAppear {
+//            Task{
+//                await pur.updatePurchasedProducts()
+//            }
+//        }
         .scrollIndicators(.hidden)
         .padding([.top, .leading, .trailing])
         .padding(.bottom, hasRoundedCorners() ? 16: 5)
@@ -163,14 +163,14 @@ extension MainPageGMView {
             Spacer()
             Button(action:{
                 withAnimation(.easeInOut(duration: 0.2)) {
-                    if products.hasUnlockedPro || freeAccess.contains(item.appCategoryTitleEnValue){
+                    if purchaseManager.hasUnlockedPro || freeAccess.contains(item.appCategoryTitleEnValue){
                         selectedInfo = index
                         if !gameInfo.selectedIndex.contains(where: { $0 == index }) {
                             gameInfo.selectedIndex.append(index)
                             gameInfo.addData(item.appCategoryCardsValue, name: item.appCategoryTitleValue, nameEn: item.appCategoryTitleEnValue)
                         }
                     } else {
-                        products.isPurchasedShow = true
+                        purchaseManager.isPurchasedShow = true
                     }
                 }
             }){
@@ -206,7 +206,7 @@ extension MainPageGMView {
         )
         .onTapGesture {
             withAnimation(.easeInOut(duration: 0.2)){
-                if products.hasUnlockedPro || freeAccess.contains(item.appCategoryTitleEnValue){
+                if purchaseManager.hasUnlockedPro || freeAccess.contains(item.appCategoryTitleEnValue){
                     if gameInfo.selectedIndex.contains(where: { $0 == index }) {
                         gameInfo.selectedIndex.removeAll(where: { $0 == index })
                         gameInfo.removeData(item.appCategoryCardsValue, name: item.appCategoryTitleValue, nameEn: item.appCategoryTitleEnValue)
@@ -215,7 +215,7 @@ extension MainPageGMView {
                         gameInfo.addData(item.appCategoryCardsValue, name: item.appCategoryTitleValue, nameEn: item.appCategoryTitleEnValue)
                     }
                 } else {
-                    products.isPurchasedShow = true
+                    purchaseManager.isPurchasedShow = true
                 }
             }
         }
@@ -264,7 +264,7 @@ extension MainPageGMView {
             Spacer()
             Button(action:{
                 withAnimation(.easeInOut(duration: 0.2)) {
-                    if products.hasUnlockedPro {
+                    if purchaseManager.hasUnlockedPro {
                         do{
                             let cardsArray = try JSONSerialization.jsonObject(with: cardsData[index-indexOffset].cardsArray ?? Data("[]".utf8))
                             selectedInfo = index
@@ -276,7 +276,7 @@ extension MainPageGMView {
                             print(error.localizedDescription)
                         }
                     } else {
-                        products.isPurchasedShow = true
+                        purchaseManager.isPurchasedShow = true
                     }
                 }
             }){
@@ -312,7 +312,7 @@ extension MainPageGMView {
         )
         .onTapGesture {
             withAnimation(.easeInOut(duration: 0.2)){
-                if products.hasUnlockedPro {
+                if purchaseManager.hasUnlockedPro {
                     do {
                         let cardsArray = try JSONSerialization.jsonObject(with: cardsData[index-indexOffset].cardsArray ?? Data("[]".utf8))
                         if gameInfo.selectedIndex.contains(where: { $0 == index }) {
@@ -326,7 +326,7 @@ extension MainPageGMView {
                         print(error.localizedDescription)
                     }
                 } else {
-                    products.isPurchasedShow = true
+                    purchaseManager.isPurchasedShow = true
                 }
             }
         }
