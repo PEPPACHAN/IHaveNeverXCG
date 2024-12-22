@@ -208,42 +208,10 @@ struct FourthPageView: View {
                     }
                     .padding(.leading, 25)
                     Spacer()
-                    Image(systemName: purchaseManager.choice == 1 ? "checkmark.circle.fill": "circle")
-                        .font(.custom("inter", size: 22))
-                        .foregroundStyle(Color.white)
-                        .padding(.trailing, 25)
-                }
-                .frame(width: 370, height: 60)
-                .background(Color.gray.opacity(0.5))
-                .clipShape(RoundedRectangle(cornerRadius: 100))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 100)
-                        .stroke(Color.white, lineWidth: purchaseManager.choice == 1 ? 1: 0)
-                }
-                .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.2)){
-                        purchaseManager.choice = 1
-                    }
-                }
-                HStack(spacing: 15){
-                    VStack(alignment: .leading){
-                        Text("monthly".changeLocale(lang: language))
-                            .foregroundStyle(Color.white)
-                            .font(.custom("inter", size: 16))
-                            .fontWeight(.bold)
-                        HStack(spacing: 5){
-                            Text("/month".changeLocale(lang: language))
-                                .foregroundStyle(Color.white)
-                                .font(.custom("inter", size: 16))
-                                .fontWeight(.medium)
-                        }
-                    }
-                    .padding(.horizontal, 25)
-                    Spacer()
                     Image(systemName: purchaseManager.choice == 0 ? "checkmark.circle.fill": "circle")
                         .font(.custom("inter", size: 22))
                         .foregroundStyle(Color.white)
-                        .padding(.horizontal, 25)
+                        .padding(.trailing, 25)
                 }
                 .frame(width: 370, height: 60)
                 .background(Color.gray.opacity(0.5))
@@ -255,6 +223,38 @@ struct FourthPageView: View {
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.2)){
                         purchaseManager.choice = 0
+                    }
+                }
+                HStack(spacing: 15){
+                    VStack(alignment: .leading){
+                        Text("monthly".changeLocale(lang: language))
+                            .foregroundStyle(Color.white)
+                            .font(.custom("inter", size: 16))
+                            .fontWeight(.bold)
+                        HStack(spacing: 5){
+                            Text(String(describing: purchaseManager.products.last?.displayPrice ?? "") + "/month".changeLocale(lang: language))
+                                .foregroundStyle(Color.white)
+                                .font(.custom("inter", size: 16))
+                                .fontWeight(.medium)
+                        }
+                    }
+                    .padding(.horizontal, 25)
+                    Spacer()
+                    Image(systemName: purchaseManager.choice == 1 ? "checkmark.circle.fill": "circle")
+                        .font(.custom("inter", size: 22))
+                        .foregroundStyle(Color.white)
+                        .padding(.horizontal, 25)
+                }
+                .frame(width: 370, height: 60)
+                .background(Color.gray.opacity(0.5))
+                .clipShape(RoundedRectangle(cornerRadius: 100))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 100)
+                        .stroke(Color.white, lineWidth: purchaseManager.choice == 1 ? 1: 0)
+                }
+                .onTapGesture {
+                    withAnimation(.easeInOut(duration: 0.2)){
+                        purchaseManager.choice = 1
                     }
                 }
             }

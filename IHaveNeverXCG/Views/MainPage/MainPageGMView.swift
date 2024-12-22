@@ -24,6 +24,8 @@ struct MainPageGMView: View {
     private let screen = UIScreen.main.bounds
     private let freeAccess = ["Manly", "Girls"]
     
+    @State private var isDeleteArray: [Int] = []
+    
     var body: some View {
         ScrollView{
             Group{
@@ -290,16 +292,35 @@ extension MainPageGMView {
                     }
             }
             
-            Image(systemName: gameInfo.selectedIndex.contains(where: { $0 == index }) ? "checkmark.circle.fill" : "circle.fill")
-                .font(.system(size: 28.37))
-                .foregroundStyle( !gameInfo.selectedIndex.contains(where: { $0 == index }) ?
-                                  Color.white.opacity(0.12) :
-                                    Color.white,
-                                  LinearGradient(colors: [
-                                    Color.init(red: 23/255, green: 168/255, blue: 143/255),
-                                    Color.init(red: 11/255, green: 140/255, blue: 117/255)], startPoint: .topLeading, endPoint: .bottomTrailing)
-                )
-                .padding(.horizontal)
+            if !isDeleteArray.contains(index){
+                Image(systemName: gameInfo.selectedIndex.contains(where: { $0 == index }) ? "checkmark.circle.fill" : "circle.fill")
+                    .font(.system(size: 28.37))
+                    .foregroundStyle( !gameInfo.selectedIndex.contains(where: { $0 == index }) ?
+                                      Color.white.opacity(0.12) :
+                                        Color.white,
+                                      LinearGradient(colors: [
+                                        Color.init(red: 23/255, green: 168/255, blue: 143/255),
+                                        Color.init(red: 11/255, green: 140/255, blue: 117/255)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
+                    .padding(.horizontal)
+            } else {
+                Image(systemName: "trash.circle.fill")
+                    .font(.system(size: 28.37))
+                    .foregroundStyle(
+                        Color.white,
+                        Color.red
+                    )
+                    .padding(.horizontal)
+                    .onTapGesture {
+                        viewContext.delete(cardsData[index-(apiData.fetchData?.appDataValue.count ?? 0)])
+                        do {
+                            try viewContext.save()
+                            isDeleteArray.removeAll(where: {$0 == index})
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: 95.93, alignment: .leading)
         .background(
@@ -310,23 +331,30 @@ extension MainPageGMView {
         .clipShape(
             RoundedRectangle(cornerRadius: 27)
         )
+        .onLongPressGesture(minimumDuration: 0.5, perform: {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isDeleteArray.append(index)
+            }
+        })
         .onTapGesture {
-            withAnimation(.easeInOut(duration: 0.2)){
-                if purchaseManager.hasUnlockedPro {
-                    do {
-                        let cardsArray = try JSONSerialization.jsonObject(with: cardsData[index-indexOffset].cardsArray ?? Data("[]".utf8))
-                        if gameInfo.selectedIndex.contains(where: { $0 == index }) {
-                            gameInfo.selectedIndex.removeAll(where: { $0 == index })
-                            gameInfo.removeAIData(cardsArray as! [String], name: cardsData[index-indexOffset].collectionName ?? "", nameEn: cardsData[index-indexOffset].collectionName ?? "")
-                        } else {
-                            gameInfo.selectedIndex.append(index)
-                            gameInfo.addAIData(cardsArray as! [String], name: cardsData[index-indexOffset].collectionName ?? "", nameEn: cardsData[index-indexOffset].collectionName ?? "")
+            if !isDeleteArray.contains(index){
+                withAnimation(.easeInOut(duration: 0.2)){
+                    if purchaseManager.hasUnlockedPro {
+                        do {
+                            let cardsArray = try JSONSerialization.jsonObject(with: cardsData[index-indexOffset].cardsArray ?? Data("[]".utf8))
+                            if gameInfo.selectedIndex.contains(where: { $0 == index }) {
+                                gameInfo.selectedIndex.removeAll(where: { $0 == index })
+                                gameInfo.removeAIData(cardsArray as! [String], name: cardsData[index-indexOffset].collectionName ?? "", nameEn: cardsData[index-indexOffset].collectionName ?? "")
+                            } else {
+                                gameInfo.selectedIndex.append(index)
+                                gameInfo.addAIData(cardsArray as! [String], name: cardsData[index-indexOffset].collectionName ?? "", nameEn: cardsData[index-indexOffset].collectionName ?? "")
+                            }
+                        } catch {
+                            print(error.localizedDescription)
                         }
-                    } catch {
-                        print(error.localizedDescription)
+                    } else {
+                        purchaseManager.isPurchasedShow = true
                     }
-                } else {
-                    purchaseManager.isPurchasedShow = true
                 }
             }
         }

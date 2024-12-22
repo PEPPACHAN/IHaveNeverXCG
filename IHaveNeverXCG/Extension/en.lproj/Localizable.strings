@@ -41,7 +41,7 @@
 "then" = "(then ";
 "year" = " /year)";
 "monthly" = "Monthly";
-"/month" = "$9.90 /month";
+"/month" = " /month";
 "continue" = "Continue";
 "noPremiumAccess" = "No Premium Access";
 "freePacks" = "Free Packs";

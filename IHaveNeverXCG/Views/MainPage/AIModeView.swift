@@ -53,6 +53,9 @@ struct AIModeView: View {
                         .font(.custom("inter", size: 18.43))
                         .fontWeight(.heavy)
                         .padding(hasRoundedCorners() ? 16: 5)
+                        .onAppear{
+                            hasNewItem = false
+                        }
                     
                     if !mode.isCardsCreated {
                         if !mode.aiIsLoaded {
