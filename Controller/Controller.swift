@@ -34,6 +34,7 @@ final class GameInfo: ObservableObject {
     
     func removeData(_ data: [AppCard], name: String, nameEn: String) {
         // function to remove data by index from all properties for game
+        print(data.count)
         data.forEach { item in
             gameData.removeAll(where: { $0 == item.appCardTextValue })
             categoryName.removeAll(where: { $0 == name })
@@ -46,12 +47,14 @@ final class GameInfo: ObservableObject {
     func addAIData(_ data: [String], name: String, nameEn: String) {
         // function to add all you need data for game
         var index = gameData.count
+        print(data.count, index)
         data.forEach { item in
             gameData.append(item+".")
             categoryName.append(name)
             categoryNameEn.append(nameEn)
             indexArray.append(index)
             index += 1
+            print(index)
         }
     }
     
@@ -173,14 +176,10 @@ final class PurchaseManager: ObservableObject {
     }
 
     private func handleVerifiedTransaction(_ transaction: Transaction) async {
-        do {
-            await updatePurchasedProducts()
-            await transaction.finish()
-            
-            print("Transaction \(transaction.id) successfully processed and finished.")
-        } catch {
-            print("Failed to process transaction \(transaction.id): \(error)")
-        }
+        await updatePurchasedProducts()
+        await transaction.finish()
+        
+        print("Transaction \(transaction.id) successfully processed and finished.")
     }
     
     func scheduleSubscriptionCheck() {

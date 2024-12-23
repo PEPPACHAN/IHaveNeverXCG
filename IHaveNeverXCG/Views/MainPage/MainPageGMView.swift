@@ -224,7 +224,7 @@ extension MainPageGMView {
     }
     
     func aiPlatesView(index: Int) -> some View {
-        let indexOffset = apiData.fetchData?.appDataValue.count ?? 0
+        let indexOffset = 20000
         let index = Int(index) + indexOffset
         return HStack{
             // just show needed categories

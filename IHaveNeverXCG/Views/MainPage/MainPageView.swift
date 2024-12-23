@@ -30,7 +30,6 @@ struct MainPageView: View {
     @State private var selectedInfo: Int?
     @State private var hasNewItem: Bool = false
     
-    
     private let screen = UIScreen.main.bounds
     
     var body: some View {

@@ -43,25 +43,27 @@ struct MainGameFieldView: View {
                         
                         VStack{
                             if isDone {
-                                Image(systemName: "checkmark.circle.fill") // complete icon after cards ended
-                                    .font(.system(size: 92.97))
-                                    .foregroundStyle(
-                                        LinearGradient(colors: [
-                                            Color.init(red: 42/255, green: 15/255, blue: 118/255),
-                                            Color.init(red: 78/255, green: 28/255, blue: 220/255)
-                                        ], startPoint: .top, endPoint: .bottom),
-                                        Color.white
-                                    )
-                                    .padding(.bottom, 12.52)
+                                if !gameInfo.gameData.isEmpty {
+                                    Image(systemName: "checkmark.circle.fill") // complete icon after cards ended
+                                        .font(.system(size: 92.97))
+                                        .foregroundStyle(
+                                            LinearGradient(colors: [
+                                                Color.init(red: 42/255, green: 15/255, blue: 118/255),
+                                                Color.init(red: 78/255, green: 28/255, blue: 220/255)
+                                            ], startPoint: .top, endPoint: .bottom),
+                                            Color.white
+                                        )
+                                        .padding(.bottom, 12.52)
+                                }
+                                Text(gameInfo.categoryName[currentPage]) // cards text
+                                    .font(.custom("inter", size: 24.74))
+                                    .fontWeight(.heavy)
+                                    .foregroundStyle(Color.white)
+                                Text(String(describing: gameInfo.gameData.count) + "cards".localizedPlural(gameInfo.gameData.count, lang: language)) // cards image or default "MyPack" image
+                                    .font(.custom("inter", size: 15.53))
+                                    .fontWeight(.medium)
+                                    .foregroundStyle(Color.white.opacity(0.37))
                             }
-                            Text(gameInfo.categoryName[currentPage]) // cards text
-                                .font(.custom("inter", size: 24.74))
-                                .fontWeight(.heavy)
-                                .foregroundStyle(Color.white)
-                            Text(String(describing: gameInfo.gameData.count) + "cards".localizedPlural(gameInfo.gameData.count, lang: language)) // cards image or default "MyPack" image
-                                .font(.custom("inter", size: 15.53))
-                                .fontWeight(.medium)
-                                .foregroundStyle(Color.white.opacity(0.37))
                         }
                         .offset(x: -13.5, y: titleOffsetY)
                         
@@ -96,115 +98,121 @@ struct MainGameFieldView: View {
                 .padding(.top, 48.68)
                 
                 if !isDone {
-                    ZStack {
-                        ForEach((currentPage..<min(currentPage + 3, gameInfo.gameData.count)).reversed(), id: \.self) { index in
-                            RoundedRectangle(cornerRadius: 18)
-                                .fill(index == currentPage
-                                      ? Color.white // face card
-                                      : index == currentPage + 1
-                                      ? Color(red: 243/255, green: 241/255, blue: 248/255, opacity: 1) // second card
-                                      : Color(red: 238/255, green: 237/255, blue: 238/255, opacity: 0.75)) // last card in behind
-                                .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * -20) // logic to skip cards in right side of screen and return them from there
-                                .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
-                                .animation(.easeInOut, value: currentPage)
-                                .frame(width: screen.width/1.16, height: screen.height/1.9)
-                                .overlay {
-                                    VStack(spacing: 71.21) {
-                                        Text(gameInfo.gameData[gameInfo.indexArray[index]].capitalizeFirstLetter()) // game text with capitalize first letter
-                                            .font(.custom("inter", size: 24.66))
-                                            .fontWeight(.bold)
-                                            .frame(maxWidth: screen.width/1.52, maxHeight: screen.height/8.11)
-                                            .lineLimit(3)
-                                            .minimumScaleFactor(0.7)
-                                            .padding(.horizontal)
-                                            .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * textOffsetY)
-                                            .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
-                                            .animation(.easeInOut, value: currentPage)
-                                        Image(uiImage: UIImage(named: gameInfo.categoryNameEn[gameInfo.indexArray[index]]) ?? UIImage(named: "MyPack")!) // image under the text
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 157.88, height: 186.73)
-                                            .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * -20)
-                                            .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
-                                            .animation(.easeInOut, value: currentPage)
+                    if !gameInfo.gameData.isEmpty{
+                        ZStack {
+                            ForEach((currentPage..<min(currentPage + 3, gameInfo.gameData.count)).reversed(), id: \.self) { index in
+                                RoundedRectangle(cornerRadius: 18)
+                                    .fill(index == currentPage
+                                          ? Color.white // face card
+                                          : index == currentPage + 1
+                                          ? Color(red: 243/255, green: 241/255, blue: 248/255, opacity: 1) // second card
+                                          : Color(red: 238/255, green: 237/255, blue: 238/255, opacity: 0.75)) // last card in behind
+                                    .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * -20) // logic to skip cards in right side of screen and return them from there
+                                    .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
+                                    .animation(.easeInOut, value: currentPage)
+                                    .frame(width: screen.width/1.16, height: screen.height/1.9)
+                                    .overlay {
+                                        VStack(spacing: 71.21) {
+                                            Text(!gameInfo.gameData.isEmpty ? gameInfo.gameData[index].capitalizeFirstLetter(): "") // game text with capitalize first letter
+                                                .font(.custom("inter", size: 24.66))
+                                                .fontWeight(.bold)
+                                                .frame(maxWidth: screen.width/1.52, maxHeight: screen.height/8.11)
+                                                .lineLimit(3)
+                                                .minimumScaleFactor(0.7)
+                                                .padding(.horizontal)
+                                                .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * textOffsetY)
+                                                .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
+                                                .animation(.easeInOut, value: currentPage)
+                                            Image(uiImage: UIImage(named: gameInfo.categoryNameEn[gameInfo.indexArray[index]]) ?? UIImage(named: "MyPack")!) // image under the text
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 157.88, height: 186.73)
+                                                .offset(x: index==currentPage ? currentOffsetX: CGFloat(index - currentPage), y: CGFloat(index - currentPage) * -20)
+                                                .scaleEffect(1 - CGFloat(index - currentPage) * 0.05)
+                                                .animation(.easeInOut, value: currentPage)
+                                        }
                                     }
-                                }
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    HStack(spacing: 58) {
-                        // there is listing buttons
-                        Button(action: {
-                            if currentPage > 0 {
-                                currentPage2 -= 1
-                                withAnimation(.easeInOut(duration: 0.3)){
-                                    currentOffsetX = UIScreen.main.bounds.width
-                                    currentPage -= 1
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
-                                    withAnimation(.easeInOut(duration: 0.5)){
-                                        currentOffsetX = 0
-                                    }
-                                }
                             }
-                        }) {
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: hasRoundedCorners() ? 55.38: 30))
                         }
-                        .padding(12.72)
-                        .padding(10)
-                        .foregroundStyle(currentPage2 != 0 ? Color.white : Color.clear)
-                        .background(currentPage2 != 0 ? Color.gray.opacity(0.5) : Color.clear)
-                        .clipShape(Circle())
-                        .disabled(currentPage2 == 0)
+                        .padding(.horizontal)
                         
-                        Image(systemName: (currentPage2+1) == gameInfo.gameData.count ? "checkmark" :"chevron.right")
-                            .font(.system(size: hasRoundedCorners() ? (currentPage2+1) != gameInfo.gameData.count ? 55.38: 41 : (currentPage2+1) != gameInfo.gameData.count ? 30: 23))
-                            .padding(.leading, (currentPage2+1) != gameInfo.gameData.count ? 0: -3.5)
+                        HStack(spacing: 58) {
+                            // there is listing buttons
+                            Button(action: {
+                                if currentPage > 0 {
+                                    currentPage2 -= 1
+                                    withAnimation(.easeInOut(duration: 0.3)){
+                                        currentOffsetX = UIScreen.main.bounds.width
+                                        currentPage -= 1
+                                    }
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                                        withAnimation(.easeInOut(duration: 0.5)){
+                                            currentOffsetX = 0
+                                        }
+                                    }
+                                }
+                            }) {
+                                Image(systemName: "chevron.left")
+                                    .font(.system(size: hasRoundedCorners() ? 55.38: 30))
+                            }
                             .padding(12.72)
                             .padding(10)
-                            .foregroundStyle(Color.white)
-                            .background(Color.gray.opacity(0.5))
+                            .foregroundStyle(currentPage2 != 0 ? Color.white : Color.clear)
+                            .background(currentPage2 != 0 ? Color.gray.opacity(0.5) : Color.clear)
                             .clipShape(Circle())
-                            .onTapGesture {
-                                onTap()
-                            }
-                    }
-                    .padding(.bottom, 50)
-                }else{
-                    // game is done and control button becomes exit and retry buttons
-                    VStack(spacing: 25){
-                        Button(action: {
-                            gameInfo.isGameStarted = false
-                            selectedTab = false
-                        }) {
-                            Text("exitToMenu".changeLocale(lang: language))
-                                .font(.custom("inter", size: 16))
-                                .fontWeight(.bold)
+                            .disabled(currentPage2 == 0)
+                            
+                            Image(systemName: (currentPage2+1) == gameInfo.gameData.count ? "checkmark" :"chevron.right")
+                                .font(.system(size: hasRoundedCorners() ? (currentPage2+1) != gameInfo.gameData.count ? 55.38: 41 : (currentPage2+1) != gameInfo.gameData.count ? 30: 23))
+                                .padding(.leading, (currentPage2+1) != gameInfo.gameData.count ? 0: -3.5)
                                 .padding(12.72)
+                                .padding(10)
+                                .foregroundStyle(Color.white)
+                                .background(Color.gray.opacity(0.5))
+                                .clipShape(Circle())
+                                .onTapGesture {
+                                    onTap()
+                                }
                         }
-                        
-                        Button(action: {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                currentPage = 0
-                                currentPage2 = 0
-                                titleOffsetY = 0
-                                isDone.toggle()
+                        .padding(.bottom, 50)
+                    }else{
+                        // game is done and control button becomes exit and retry buttons
+                        VStack(spacing: 25){
+                            Button(action: {
+                                selectedTab = false
+                                gameInfo.isGameStarted = false
+                                gameInfo.selectedIndex = []
+                                gameInfo.categoryName = []
+                                gameInfo.categoryNameEn = []
+                                gameInfo.gameData = []
+                            }) {
+                                Text("exitToMenu".changeLocale(lang: language))
+                                    .font(.custom("inter", size: 16))
+                                    .fontWeight(.bold)
+                                    .padding(12.72)
                             }
-                        }) {
-                            Text("repeat".changeLocale(lang: language))
-                                .font(.custom("inter", size: 16))
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 25)
-                                .background(Color.init(red: 56/255, green: 25/255, blue: 145/255))
-                                .clipShape(RoundedRectangle(cornerRadius: 100))
-                                .padding(.horizontal, 29)
+                            
+                            Button(action: {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    currentPage = 0
+                                    currentPage2 = 0
+                                    titleOffsetY = 0
+                                    isDone.toggle()
+                                }
+                            }) {
+                                Text("repeat".changeLocale(lang: language))
+                                    .font(.custom("inter", size: 16))
+                                    .fontWeight(.bold)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 25)
+                                    .background(Color.init(red: 56/255, green: 25/255, blue: 145/255))
+                                    .clipShape(RoundedRectangle(cornerRadius: 100))
+                                    .padding(.horizontal, 29)
+                            }
                         }
+                        .offset(y: hasRoundedCorners() ? 0: -20)
+                        .foregroundStyle(.white)
                     }
-                    .offset(y: hasRoundedCorners() ? 0: -20)
-                    .foregroundStyle(.white)
                 }
             }
         }
@@ -224,12 +232,6 @@ struct MainGameFieldView: View {
                 Color.init(red: 78/255, green: 28/255, blue: 220/255)
             ], startPoint: .top, endPoint: .bottom))
         .tabViewStyle(.page(indexDisplayMode: .never))
-        .onDisappear{
-            gameInfo.selectedIndex.removeAll()
-            gameInfo.categoryName.removeAll()
-            gameInfo.categoryNameEn.removeAll()
-            gameInfo.gameData.removeAll()
-        }
         
         if showRating {
             requestRating()
@@ -312,10 +314,18 @@ extension MainGameFieldView {
                                 selectedTab = false
                                 isExitButtonPressed.toggle()
                                 gameInfo.isGameStarted = false
+                                gameInfo.selectedIndex = []
+                                gameInfo.categoryName = []
+                                gameInfo.categoryNameEn = []
+                                gameInfo.gameData = []
                             } else {
                                 showRating = true
                                 selectedTab = false
                                 isExitButtonPressed.toggle()
+                                gameInfo.selectedIndex = []
+                                gameInfo.categoryName = []
+                                gameInfo.categoryNameEn = []
+                                gameInfo.gameData = []
                             }
                         }
                 }
